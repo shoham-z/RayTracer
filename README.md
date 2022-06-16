@@ -1,5 +1,5 @@
 # RayTracer
 
--- lol
-- TO DO
-- 
+# TO DO
+- one thing
+- the other
