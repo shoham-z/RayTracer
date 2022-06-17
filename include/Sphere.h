@@ -14,6 +14,8 @@ public:
 
 
     Vector getNormal(Point point) override;
+
+    std::list<Point> findIntersections(Ray ray) override;
 };
 
 

@@ -11,19 +11,78 @@
 
 class Vector {
 public:
-    double x,y,z;
+    double x, y, z;
 
     Vector(double x, double y, double z);
 
+    /**
+     * Sum two vectors triads into a new triad vector by adding the two points
+     * that are constructing the vectors
+     *
+     * @param other the point of the second vector for adding it to the first vector
+     * @return new vector, result of add
+     */
     Vector add(Vector other) const;
+
+    /**
+     * Subtracts two vectors triads into a new triad vector by subtracting the two points
+     * that are constructing the vectors
+     *
+     * @param other the point of the second vector for subtracting it to the first vector
+     * @return new vector, result of subtract
+     */
     Vector subtract(Vector other) const;
+
+    /**
+     * Product two vectors into a scalar where each couple of
+     * numbers are multiplied, and then added together.
+     *
+     * @param other the second vector for dot-product
+     * @return scalar, result of dot-product
+     */
     double dotProduct(Vector other);
+
+    /**
+     * Product two vectors into a new vector, witch is a vector that is perpendicular to both vectors
+     * and thus normal to the plane containing them.
+     *
+     * @param other the second vector for cross-product
+     * @return vector, result of cross-product
+     */
     Vector crossProduct(Vector other);
+
+    /**
+     * for normalizing vectors, in the same direction as the original vector.
+     *
+     * @return a normalized vector, in the same direction as the original vector.
+     */
     Vector normalize();
+
+    /**
+     * Scale (multiply) point of vector by a number into a new vector where each
+     * number of the point is multiplied by the number
+     *
+     * @param scalar the number for scaling
+     * @return new vector, result of scale
+     */
     Vector scale(double scalar);
+
+    /**
+     * calculates the length of the vector.
+     *
+     * @return number, the length of the vector.
+     */
     double length();
 
+    /**
+     * calculates the length squared of the vector.
+     *
+     * @return number, the length squared of the vector.
+     */
+    double lengthSquared();
+
     bool operator==(Vector &vector);
+
     friend std::ostream &operator<<(std::ostream &os, Vector &vector);
 
 };

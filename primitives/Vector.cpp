@@ -19,23 +19,28 @@ Vector Vector::subtract(Vector other) const {
 }
 
 double Vector::dotProduct(Vector other) {
-    return this->x * other.x +this->y * other.y + this->z * other.z;
+    return this->x * other.x + this->y * other.y + this->z * other.z;
 }
 
 Vector Vector::crossProduct(Vector other) {
-    return Vector(this->y*other.z - this->z * other.y, this->z*other.x - this->x * other.z, this->x*other.y - this->y * other.x);
+    return Vector(this->y * other.z - this->z * other.y, this->z * other.x - this->x * other.z,
+                  this->x * other.y - this->y * other.x);
 }
 
 Vector Vector::normalize() {
-    return this->scale(1/this->length());
+    return this->scale(1 / this->length());
 }
 
 Vector Vector::scale(double scalar) {
-    return {this->x*scalar, this->y*scalar, this->z*scalar};
+    return {this->x * scalar, this->y * scalar, this->z * scalar};
 }
 
 double Vector::length() {
-    return sqrt(this->x*this->x + this->y*this->y + this->z*this->z);
+    return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
+}
+
+double Vector::lengthSquared() {
+    return this->x * this->x + this->y * this->y + this->z * this->z;
 }
 
 bool Vector::operator==(Vector &vector) {
@@ -43,6 +48,7 @@ bool Vector::operator==(Vector &vector) {
 }
 
 std::ostream &operator<<(std::ostream &os, Vector &vector) {
-    os << "vector(" <<vector.x << ", " << vector.y << ", " << vector.z << ")";
+    os << "vector(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
     return os;
 }
+

@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(RayTracer main.cpp
         primitives/Vector.cpp
         primitives/Ray.cpp
+        primitives/Util.cpp
         geometries/Sphere.cpp
         geometries/Geometry.cpp
         geometries/Intersectable.cpp
