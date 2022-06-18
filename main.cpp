@@ -10,11 +10,8 @@
 
 int main() {
     Scene scene = Scene("Test scene")
-            .setAmbientLight(AmbientLight(Color(255, 191, 191), Point(1,1,1))) //
-            .setBackground( Color(75, 127, 90));
-
-    Geometry *sphere = new Sphere(50, Point(0, 0, -100));
-    scene.geometries.add(sphere);
+            .setAmbientLight(AmbientLight(Color::red(), Point(1,1,1))) //
+            .setBackground( Color::red());
 
     Camera camera =  Camera(Point::ZERO(),  Vector(0, 0, -1),  Vector(0, 1, 0)) //
     .setVPDistance(100) //
