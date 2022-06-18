@@ -32,3 +32,15 @@ std::ostream &operator<<(std::ostream &os, Point &point) {
 Vector Point::subtract(Point point) {
     return Vector(this->x-point.x, this->y-point.y, this->z-point.z);
 }
+
+double Point::getX() {
+    return this->x;
+}
+
+double Point::getY() {
+    return this->y;
+}
+
+double Point::getZ() {
+    return this->z;
+}

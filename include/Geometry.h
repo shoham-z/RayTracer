@@ -4,12 +4,15 @@
 #include "Vector.h"
 #include "Point.h"
 #include "Intersectable.h"
+#include "Color.h"
+#include "Material.h"
+
 #ifndef RAYTRACER_GEOMETRY_H
 #define RAYTRACER_GEOMETRY_H
 
 
 class Geometry: public Intersectable {
-    int index = 0;
+    //Color emission;
 public:
     virtual Vector getNormal(Point point) = 0;
 };

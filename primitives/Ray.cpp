@@ -27,3 +27,18 @@ Point Ray::getStart() {
 Vector Ray::getDirection() {
     return this->dir;
 }
+
+Point Ray::findClosestPoint(std::list<Point> points) {
+
+    Point point = Point(0,0,0);
+    double distance = std::numeric_limits<double>::max();;
+    for (Point geoPoint : points) {
+        double d = this->start.distance(point);
+        if (d < distance) {
+            distance = d;
+            point = geoPoint;
+        }
+    }
+    return point;
+
+}

@@ -1,6 +1,7 @@
 //
 // Created by shoham on 6/16/22.
 //
+#include <list>
 #include "Vector.h"
 #include "Point.h"
 
@@ -36,6 +37,7 @@ public:
      */
     Vector getDirection();
 
+    Point findClosestPoint(std::list<Point> points);
 
     bool operator==(Ray &ray);
 

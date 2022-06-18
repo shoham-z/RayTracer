@@ -10,12 +10,26 @@
 class Point {
     double x, y, z;
 public:
-    Point(double x,double y,double z);
+    static Point ZERO() { return {0, 0, 0}; };
+
+    static Point ONE() { return {1, 1, 1}; };
+
+    Point(double x, double y, double z);
+
     Point add(Vector other);
+
     Vector subtract(Point point);
+
     double distance(Point other);
 
+    double getX();
+
+    double getY();
+
+    double getZ();
+
     bool operator==(Point &point);
+
     friend std::ostream &operator<<(std::ostream &os, Point &point);
 };
 

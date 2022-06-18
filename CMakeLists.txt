@@ -8,9 +8,16 @@ add_executable(RayTracer main.cpp
         primitives/Vector.cpp
         primitives/Ray.cpp
         primitives/Util.cpp
+        primitives/Color.cpp
+        primitives/Point.cpp
         geometries/Sphere.cpp
         geometries/Geometry.cpp
+        geometries/Geometries.cpp
         geometries/Intersectable.cpp
-        primitives/Point.cpp)
+        renderer/Camera.cpp
+        renderer/RayTracer.cpp
+        renderer/Scene.cpp
+        renderer/ImageWriter.cpp
+        lights/AmbientLight.cpp)
 
 target_include_directories(RayTracer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
