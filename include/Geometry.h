@@ -8,7 +8,8 @@
 #define RAYTRACER_GEOMETRY_H
 
 
-class Geometry:Intersectable {
+class Geometry: public Intersectable {
+    int index = 0;
 public:
     virtual Vector getNormal(Point point) = 0;
 };

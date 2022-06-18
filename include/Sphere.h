@@ -6,7 +6,7 @@
 #define RAYTRACER_SPHERE_H
 
 
-class Sphere : Geometry {
+class Sphere : public Geometry {
 double radius;
 Point center;
 public:
