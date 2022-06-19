@@ -4,9 +4,9 @@
 
 #include "Camera.h"
 
-Camera Camera::setImageWriter(ImageWriter imageWriter1){
-this->imageWriter = imageWriter1;
-return *this;
+Camera Camera::setImageWriter(ImageWriter imageWriter1) {
+    this->imageWriter = imageWriter1;
+    return *this;
 }
 
 Camera Camera::setRayTracer(RayTracer raytracer) {
@@ -33,12 +33,12 @@ Camera Camera::setVPDistance(double distance) {
 }
 
 Ray Camera::constructRay(int nX, int nY, int j, int i) {
-        Point pIJ = this->position.add(this->vTo.scale(this->distanceFromVp));
-        double xJ = (j - ((nX - 1) /(double) 2)) * ((double) this->vpWidth / nX);
-        double yI = (((nY - 1) /(double) 2) - i) * ((double) this->vpHeight / nY);
-        if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
-        if (yI != 0) pIJ = pIJ.add(vUp.scale(yI));
-        return {this->position, pIJ.subtract(this->position)};
+    Point pIJ = this->position.add(this->vTo.scale(this->distanceFromVp));
+    double xJ = (j - ((nX - 1) / (double) 2)) * ((double) this->vpWidth / nX);
+    double yI = (((nY - 1) / (double) 2) - i) * ((double) this->vpHeight / nY);
+    if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
+    if (yI != 0) pIJ = pIJ.add(vUp.scale(yI));
+    return {this->position, pIJ.subtract(this->position)};
 }
 
 void Camera::renderImage() {
@@ -85,7 +85,7 @@ double Camera::getDistanceFromVp() {
 void Camera::printGrid(int interval, Color color) {
     for (int i = 0; i < this->imageWriter.getWidth(); i++) {
         for (int j = 0; j < this->imageWriter.getHeight(); j++) {
-            if(i%interval == 0 || j%interval == 0) this->imageWriter.writePixel(i, j, color);
+            if (i % interval == 0 || j % interval == 0) this->imageWriter.writePixel(i, j, color);
         }
     }
 }

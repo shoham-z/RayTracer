@@ -4,10 +4,13 @@
 #include <list>
 #include "Vector.h"
 #include "Point.h"
+#include "GeoPoint.h"
 
 #ifndef RAYTRACER_RAY_H
 #define RAYTRACER_RAY_H
 
+
+class GeoPoint;
 
 class Ray {
     Point start;
@@ -39,9 +42,12 @@ public:
 
     Point findClosestPoint(std::list<Point> points);
 
+
     bool operator==(Ray &ray);
 
     friend std::ostream &operator<<(std::ostream &os, Ray &ray);
+
+    GeoPoint findClosestGeoPoint(std::list<GeoPoint> geoPoints);
 };
 
 

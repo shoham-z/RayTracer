@@ -4,6 +4,7 @@
 #include <list>
 #include "Ray.h"
 #include "Util.h"
+#include "GeoPoint.h"
 #include <algorithm>
 
 
@@ -13,15 +14,13 @@
 
 class Intersectable {
 public:
-/**
- * Finds intersections between the ray
- * and the geometry
- *
- * @param ray The ray to intersect with the geometry
- * @return List of intersection points
- */
-virtual std::list<Point> findIntersections(Ray ray) = 0;
-};
 
+    std::list<Point> findIntersections(Ray ray);
+
+    virtual std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray) = 0;
+
+
+    std::list<GeoPoint> findGeoIntersections(Ray ray);
+};
 
 #endif //RAYTRACER_INTERSECTABLE_H

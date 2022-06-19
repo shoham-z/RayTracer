@@ -13,13 +13,13 @@ void Geometries::add(std::list<Geometry*> newGeometries) {
     this->geometries.splice(this->geometries.end(), newGeometries);
 }
 
-std::list<Point> Geometries::findIntersections(Ray ray) {
-    std::list<Point> intersections;
+std::list<GeoPoint> Geometries::findGeoIntersectionsHelper(Ray ray) {
+    std::list<GeoPoint> intersections;
     std::list<Geometry>::iterator it;
 
     std::for_each(this->geometries.begin(), this->geometries.end(),
                   [&ray, &intersections](Geometry* geometry) {
-                        std::list<Point> tmp = geometry->findIntersections(ray);
+                        std::list<GeoPoint> tmp = geometry->findGeoIntersections(ray);
                       intersections.splice(intersections.end(), tmp);
                   });
     return intersections;
@@ -32,3 +32,5 @@ Geometries::Geometries() {
 void Geometries::add(Geometry* newGeometry) {
 this->geometries.push_back(newGeometry);
 }
+
+

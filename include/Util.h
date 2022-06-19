@@ -4,7 +4,7 @@
 #include <cmath>
 #include <iostream>
 
-
+template <typename T> void assertEquals(T expected, T actual, const std::string& message);
 #ifndef RAYTRACER_UTIL_H
 #define RAYTRACER_UTIL_H
 

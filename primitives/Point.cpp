@@ -11,16 +11,16 @@ Point::Point(double x, double y, double z) {
     this->z = z;
 }
 
-Point Point::add(Vector other) {
-    return Point(this->x + other.x,this->y + other.y, this->z + other.z);
+Point Point::add(Vector other) const {
+    return {this->x + other.x,this->y + other.y, this->z + other.z};
 }
 
-double Point::distance(Point other) {
+double Point::distance(Point other) const {
     return sqrt((this->x - other.x) * (this->x - other.x) + (this->y - other.y) * (this->y - other.y) +
                 (this->z - other.z) * (this->z - other.z));
 }
 
-bool Point::operator==(Point &point) {
+bool Point::operator==(Point point) const {
     return this->x == point.x && this->y == point.y && this->z == point.z;
 }
 
@@ -29,18 +29,24 @@ std::ostream &operator<<(std::ostream &os, Point &point) {
     return os;
 }
 
-Vector Point::subtract(Point point) {
+Vector Point::subtract(Point point) const {
     return Vector(this->x-point.x, this->y-point.y, this->z-point.z);
 }
 
-double Point::getX() {
+double Point::getX() const {
     return this->x;
 }
 
-double Point::getY() {
+double Point::getY() const {
     return this->y;
 }
 
-double Point::getZ() {
+double Point::getZ() const {
     return this->z;
+}
+
+Point::Point() {
+    this->x = 0;
+    this->y = 0;
+    this->z = 0;
 }

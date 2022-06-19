@@ -7,7 +7,7 @@
 #include <utility>
 
 Scene::Scene(std::string name) {
-        this->name = std::move(name);
+    this->name = std::move(name);
 }
 
 Scene Scene::setGeometries(Geometries geometries) {

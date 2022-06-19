@@ -18,32 +18,32 @@ Vector Vector::subtract(Vector other) const {
     return {this->x - other.x, this->y - other.y, this->z - other.z};
 }
 
-double Vector::dotProduct(Vector other) {
+double Vector::dotProduct(Vector other) const {
     return this->x * other.x + this->y * other.y + this->z * other.z;
 }
 
-Vector Vector::crossProduct(Vector other) {
-    return Vector(this->y * other.z - this->z * other.y, this->z * other.x - this->x * other.z,
-                  this->x * other.y - this->y * other.x);
+Vector Vector::crossProduct(Vector other) const {
+    return {this->y * other.z - this->z * other.y, this->z * other.x - this->x * other.z,
+                  this->x * other.y - this->y * other.x};
 }
 
-Vector Vector::normalize() {
+Vector Vector::normalize() const {
     return this->scale(1 / this->length());
 }
 
-Vector Vector::scale(double scalar) {
+Vector Vector::scale(double scalar) const {
     return {this->x * scalar, this->y * scalar, this->z * scalar};
 }
 
-double Vector::length() {
+double Vector::length() const {
     return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
 }
 
-double Vector::lengthSquared() {
+double Vector::lengthSquared() const {
     return this->x * this->x + this->y * this->y + this->z * this->z;
 }
 
-bool Vector::operator==(Vector &vector) {
+bool Vector::operator==(Vector &vector) const {
     return this->x == vector.x && this->y == vector.y && this->z == vector.z;
 }
 

@@ -13,16 +13,20 @@
 
 class ImageWriter {
     int height, width;
-    Color** image;
+    Color *image;
     std::string imageName;
     std::string FOLDER_PATH;
 
 
 public:
     ImageWriter(std::string imageName, int nX, int nY);
+
     int getHeight();
+
     int getWidth();
+
     void writeToImage();
+
     void writePixel(int xIndex, int yIndex, Color color);
 };
 

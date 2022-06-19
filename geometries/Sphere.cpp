@@ -4,7 +4,7 @@
 
 #include "Sphere.h"
 
-Sphere::Sphere(double radius, Point center) : center(center) {
+Sphere::Sphere(Point center, double radius) : center(center) {
     this->radius = radius;
 }
 
@@ -12,17 +12,18 @@ Vector Sphere::getNormal(Point point) {
     return point.subtract(this->center).normalize();
 }
 
-std::list<Point> Sphere::findIntersections(Ray ray) {
-    std::list<Point> intersections;
+std::list<GeoPoint> Sphere::findGeoIntersectionsHelper(Ray ray) {
+    std::list<GeoPoint> intersections;
     Vector u = Vector(0, 0, 0);
     if (ray.getStart() == this->center) {
-        intersections.push_back(ray.getPoint(this->radius));
+        intersections.emplace_back(this, ray.getPoint(this->radius));
         return intersections;
     } else
         u = this->center.subtract(ray.getStart());
 
     double tm = ray.getDirection().dotProduct(u);
-    double d2 = u.lengthSquared() - tm * tm;
+    double d2 = u.lengthSquared() - (tm * tm);
+    if (d2<0) return intersections;
     double th2 = Util::alignZero(this->radius * this->radius - d2);
     if (th2 > 0) {
 
@@ -31,8 +32,10 @@ std::list<Point> Sphere::findIntersections(Ray ray) {
         double t1 = Util::alignZero(tm - th);
         double t2 = Util::alignZero(tm + th);
         if (t2 > 0)
-            t1 <= 0 ? intersections.push_back(ray.getPoint(t2)) : intersections.push_back(ray.getPoint(t1));
-        intersections.push_back(ray.getPoint(t2));
+            t1 <= 0 ? intersections.emplace_back(GeoPoint(this, ray.getPoint(t2))) : intersections.emplace_back(
+                    GeoPoint(this, ray.getPoint(t1)));
+
+        intersections.emplace_back(GeoPoint(this, ray.getPoint(t2)));
     }
     return intersections;
 }

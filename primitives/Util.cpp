@@ -3,3 +3,10 @@
 //
 
 #include "Util.h"
+
+
+template <typename T> void assertEquals(T expected, T actual, const std::string& message) {
+    if (expected == actual) return;
+    std::cout << message << std::endl;
+    exit(-1);
+}

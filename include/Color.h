@@ -24,6 +24,7 @@ public:
     static Color white() { return {255, 255, 255}; }
 
     Color(double r, double g, double b);
+    Color();
 
     Color scale(double k);
 

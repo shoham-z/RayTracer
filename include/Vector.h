@@ -40,7 +40,7 @@ public:
      * @param other the second vector for dot-product
      * @return scalar, result of dot-product
      */
-    double dotProduct(Vector other);
+    double dotProduct(Vector other) const;
 
     /**
      * Product two vectors into a new vector, witch is a vector that is perpendicular to both vectors
@@ -49,14 +49,14 @@ public:
      * @param other the second vector for cross-product
      * @return vector, result of cross-product
      */
-    Vector crossProduct(Vector other);
+    Vector crossProduct(Vector other) const;
 
     /**
      * for normalizing vectors, in the same direction as the original vector.
      *
      * @return a normalized vector, in the same direction as the original vector.
      */
-    Vector normalize();
+    Vector normalize() const;
 
     /**
      * Scale (multiply) point of vector by a number into a new vector where each
@@ -65,23 +65,23 @@ public:
      * @param scalar the number for scaling
      * @return new vector, result of scale
      */
-    Vector scale(double scalar);
+    Vector scale(double scalar) const;
 
     /**
      * calculates the length of the vector.
      *
      * @return number, the length of the vector.
      */
-    double length();
+    double length() const;
 
     /**
      * calculates the length squared of the vector.
      *
      * @return number, the length squared of the vector.
      */
-    double lengthSquared();
+    double lengthSquared() const;
 
-    bool operator==(Vector &vector);
+    bool operator==(Vector &vector) const;
 
     friend std::ostream &operator<<(std::ostream &os, Vector &vector);
 

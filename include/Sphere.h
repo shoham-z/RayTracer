@@ -2,20 +2,21 @@
 // Created by shoham on 6/16/22.
 //
 #include "Geometry.h"
+
 #ifndef RAYTRACER_SPHERE_H
 #define RAYTRACER_SPHERE_H
 
 
 class Sphere : public Geometry {
-double radius;
-Point center;
+    double radius;
+    Point center;
 public:
-    Sphere(double radius, Point center);
+    Sphere(Point center, double radius);
 
 
     Vector getNormal(Point point) override;
 
-    std::list<Point> findIntersections(Ray ray) override;
+    std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 };
 
 

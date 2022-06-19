@@ -4,7 +4,7 @@
 
 #include "Ray.h"
 
-Ray::Ray(Point start, Vector dir) : dir(dir), start(start) {
+Ray::Ray(Point start, Vector dir) : dir(dir.normalize()), start(start) {
 }
 
 bool Ray::operator==(Ray &ray) {
@@ -31,7 +31,7 @@ Vector Ray::getDirection() {
 Point Ray::findClosestPoint(std::list<Point> points) {
 
     Point point = Point(0,0,0);
-    double distance = std::numeric_limits<double>::max();;
+    double distance = std::numeric_limits<double>::max();
     for (Point geoPoint : points) {
         double d = this->start.distance(point);
         if (d < distance) {
@@ -42,3 +42,21 @@ Point Ray::findClosestPoint(std::list<Point> points) {
     return point;
 
 }
+
+GeoPoint Ray::findClosestGeoPoint(std::list<GeoPoint> geoPoints) {
+    int index = -1;
+    GeoPoint goodGeoPoint;
+    double distance = std::numeric_limits<double>::max();
+    for (GeoPoint geoPoint:
+            geoPoints) {
+        if (geoPoint.point.subtract(this->start).dotProduct(this->dir) > 0) {
+            double d = this->start.distance(geoPoint.point);
+            if (d < distance) {
+                distance = d;
+                goodGeoPoint = geoPoint;
+            }
+        }
+    }
+    return goodGeoPoint;
+}
+

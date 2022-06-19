@@ -12,9 +12,11 @@
 
 
 class Geometry: public Intersectable {
-    //Color emission;
+    Color emission;
 public:
     virtual Vector getNormal(Point point) = 0;
+    Color getEmission();
+    void setEmission(Color emission);
 };
 
 

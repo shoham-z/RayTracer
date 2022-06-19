@@ -3,20 +3,24 @@
 //
 #include "Intersectable.h"
 #include "Geometry.h"
+
 #ifndef RAYTRACER_GEOMETRIES_H
 #define RAYTRACER_GEOMETRIES_H
 
 
-class Geometries: Intersectable {
-    std::list<Geometry*> geometries;
+class Geometries : public Intersectable {
+    std::list<Geometry *> geometries;
 
 
 public:
 
-    void add(std::list<Geometry*> newGeometries);
-    void add(Geometry* newGeometry);
-    std::list<Point> findIntersections(Ray ray) override;
-    explicit Geometries(std::list<Geometry*> newGeometries);
+    void add(std::list<Geometry *> newGeometries);
+
+    void add(Geometry *newGeometry);
+
+    std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray) override;
+
+    explicit Geometries(std::list<Geometry *> newGeometries);
 
     Geometries();
 };

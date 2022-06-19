@@ -10,8 +10,7 @@ ImageWriter::ImageWriter(std::string imageName, int nX, int nY) {
     this->height = nY;
     this->FOLDER_PATH = "/home/shoham/CLionProjects/RayTracer/images/";
 
-    this->image = new Color*[nX * nY];
-
+    this->image = new Color[nX * nY];
 }
 
 int ImageWriter::getHeight() {
@@ -23,25 +22,20 @@ int ImageWriter::getWidth() {
 }
 
 void ImageWriter::writePixel(int xIndex, int yIndex, Color color) {
-    int tmp = xIndex+this->height*yIndex;
-    this->image[tmp] = &color;
+    int tmp = xIndex * this->height + yIndex;
+    this->image[tmp] = color;
 }
 
 void ImageWriter::writeToImage() {
-    // here the color array is still fine
     std::ofstream ofs(this->FOLDER_PATH + this->imageName + "first.ppm", std::ios_base::out | std::ios_base::binary);
-    // here the color array is messed up - CREATE DATA STRUCTURE ???
 
     ofs << "P6" << std::endl << this->width << ' ' << this->height << std::endl << "255" << std::endl;
 
-    Color color = Color::red().add(Color::blue());
+    Color color;
     for (int j = 0; j < this->height; ++j)
         for (int i = 0; i < this->width; ++i) {
             int index = i + j * this->height;
-            Color color = *this->image[index];
-            if(index % 100==0){
-                int b = 0;
-            }
+            color = this->image[index];
             ofs << (char) (color.getR())
                 << (char) (color.getG())
                 << (char) (color.getB());       // red, green, blue
