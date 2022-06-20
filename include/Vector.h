@@ -15,6 +15,9 @@ public:
 
     Vector(double x, double y, double z);
 
+    static Vector ZERO() {return {0,0,0};};
+
+    bool isZero();
     /**
      * Sum two vectors triads into a new triad vector by adding the two points
      * that are constructing the vectors

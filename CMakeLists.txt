@@ -12,6 +12,8 @@ add_executable(RayTracer main.cpp
         primitives/Point.cpp
         primitives/GeoPoint.cpp
         geometries/Sphere.cpp
+        geometries/Plane.cpp
+        geometries/Triangle.cpp
         geometries/Geometry.cpp
         geometries/Geometries.cpp
         geometries/Intersectable.cpp

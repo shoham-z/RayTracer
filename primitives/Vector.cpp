@@ -24,7 +24,7 @@ double Vector::dotProduct(Vector other) const {
 
 Vector Vector::crossProduct(Vector other) const {
     return {this->y * other.z - this->z * other.y, this->z * other.x - this->x * other.z,
-                  this->x * other.y - this->y * other.x};
+            this->x * other.y - this->y * other.x};
 }
 
 Vector Vector::normalize() const {
@@ -50,5 +50,10 @@ bool Vector::operator==(Vector &vector) const {
 std::ostream &operator<<(std::ostream &os, Vector &vector) {
     os << "vector(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
     return os;
+}
+
+bool Vector::isZero() {
+    Vector zero = Vector::ZERO();
+    return this->operator==(zero);
 }
 

@@ -12,11 +12,13 @@ Color RayTracer::traceRay(Ray ray) {
     std::list<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
     if (intersections.empty()) return scene.background;
     GeoPoint closestPoint = ray.findClosestGeoPoint(intersections);
-    return calcColor(closestPoint);
+    Color color =calcColor(closestPoint);
+    return color;
 }
 
-Color RayTracer::calcColor(GeoPoint point) {
+Color RayTracer::calcColor(GeoPoint geoPoint) {
+    Color emission = geoPoint.geometry->getEmission();
     return scene.ambientLight.getIntensity()
-            .add(point.geometry->getEmission());
+            .add(emission);
 }
 
