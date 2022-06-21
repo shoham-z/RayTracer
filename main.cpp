@@ -97,8 +97,8 @@ int main() {
     testGetNormal();
     testConstructRay();
     testFindIntersections();
-    //gridTest();
-    //basicRenderTest();
+    gridTest();
+    basicRenderTest();
     basicRenderMultiColorTest();
     return 0;
 }

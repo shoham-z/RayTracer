@@ -47,10 +47,10 @@ void Camera::renderImage() {
     }
     int yPixels = this->imageWriter.getHeight();
     int xPixels = this->imageWriter.getWidth();
-    for (int i = 0; i < yPixels; i++) {
-        for (int j = 0; j < xPixels; j++)
-            this->imageWriter.writePixel(j, i, this->rayTracer.traceRay(
-                    this->constructRay(xPixels, yPixels, i, j)));
+    for (int i = 0; i < xPixels; i++) {
+        for (int j = 0; j < yPixels; j++)
+            this->imageWriter.writePixel(i, j, this->rayTracer.traceRay(
+                    this->constructRay(xPixels, yPixels, j, i)));
     }
 }
 
