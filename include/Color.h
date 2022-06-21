@@ -40,6 +40,8 @@ public:
 
     Color operator=(struct Color *other);
 
+    friend std::ostream &operator<<(std::ostream &os, Color &color);
+
     int getR();
     int getG();
     int getB();

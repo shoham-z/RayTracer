@@ -13,19 +13,19 @@ Color::Color(double r, double g, double b) {
 
 Color Color::scale(double k) {
     if (k < 0.0) exit(-1);
-    return {this->r*k,this->g*k,this->b*k};
+    return {this->r * k, this->g * k, this->b * k};
 }
 
 Color Color::reduce(double k) {
     if (k < 1.0) exit(-1);
-    return {this->r / k,this->g / k,this->b / k};
+    return {this->r / k, this->g / k, this->b / k};
 }
 
 Color Color::add(const std::list<Color> &colors) {
     double rr = this->r;
     double rg = this->g;
     double rb = this->b;
-    for (Color c : colors) {
+    for (Color c: colors) {
         rr += c.r;
         rg += c.g;
         rb += c.b;
@@ -39,33 +39,39 @@ Color Color::add(Color color) {
 
 Color Color::scale(Point k) {
     if (k.getX() < 0.0 || k.getY() < 0.0 || k.getZ() < 0.0) exit(-1);
-        return {this->r*k.getX(),this->g*k.getY(),this->b*k.getZ()};
+    return {this->r * k.getX(), this->g * k.getY(), this->b * k.getZ()};
 }
 
 Color Color::reduce(Point k) {
     if (k.getX() < 0.0 || k.getY() < 0.0 || k.getZ() < 0.0) exit(-1);
-    return {this->r/k.getX(),this->g/k.getY(),this->b/k.getZ()};}
+    return {this->r / k.getX(), this->g / k.getY(), this->b / k.getZ()};
+}
 
 Color Color::operator=(struct Color *other) {
     return *other;
 }
 
 int Color::getR() {
-    return (int)this->r % 256;
+    return this->r > 255 ? 255 : (int) this->r;
 }
 
 int Color::getG() {
-    return (int)this->g % 256;
+    return this->g > 255 ? 255 : (int) this->g;
 }
 
 int Color::getB() {
-    return (int)this->b % 256;
+    return this->b > 255 ? 255 : (int) this->b;
 }
 
 Color::Color() {
     this->r = 0;
-    this->g= 0;
+    this->g = 0;
     this->b = 0;
+}
+
+std::ostream &operator<<(std::ostream &os, Color &color) {
+    os << "point(" << color.r << ", " << color.g << ", " << color.b << ")";
+    return os;
 }
 
 

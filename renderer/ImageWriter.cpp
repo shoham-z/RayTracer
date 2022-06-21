@@ -36,6 +36,9 @@ void ImageWriter::writeToImage() {
         for (int i = 0; i < this->width; ++i) {
             int index = i + j * this->height;
             color = this->image[index];
+            if(color.getR()!=color.getG()&&color.getG()!=color.getB()&&(color.getG()!=255||color.getG()!=0||color.getG()!=51)){
+                std::cout<<"color : " << color<< std::endl;
+            }
             ofs << (char) (color.getR())
                 << (char) (color.getG())
                 << (char) (color.getB());       // red, green, blue
