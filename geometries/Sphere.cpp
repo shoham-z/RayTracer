@@ -2,7 +2,7 @@
 // Created by shoham on 6/16/22.
 //
 
-#include "Sphere.h"
+#include "geometries/Sphere.h"
 
 Sphere::Sphere(Point center, double radius) : center(center) {
     this->radius = radius;

@@ -2,7 +2,7 @@
 // Created by shoham on 6/20/22.
 //
 
-#include "Triangle.h"
+#include "geometries/Triangle.h"
 
 Triangle::Triangle(Point p1, Point p2, Point p3) : Plane(p1, p2, p3) {
 Plane(p1,p2,p3);

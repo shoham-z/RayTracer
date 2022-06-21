@@ -2,7 +2,7 @@
 // Created by shoham on 6/19/22.
 //
 
-#include "GeoPoint.h"
+#include "geometries/GeoPoint.h"
 
 GeoPoint::GeoPoint(Geometry *geometry, Point point) : point(point) {
     this->geometry = geometry;

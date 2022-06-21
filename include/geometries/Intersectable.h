@@ -2,7 +2,7 @@
 // Created by shoham on 6/16/22.
 //
 #include <list>
-#include "Ray.h"
+#include "primitives/Ray.h"
 #include "Util.h"
 #include "GeoPoint.h"
 #include <algorithm>

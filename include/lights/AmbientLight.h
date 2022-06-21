@@ -5,17 +5,15 @@
 #ifndef RAYTRACER_AMBIENTLIGHT_H
 #define RAYTRACER_AMBIENTLIGHT_H
 
+#include "lights/Light.h"
+#include "primitives/Color.h"
+#include "primitives/Point.h"
 
-#include "Color.h"
-#include "Point.h"
-
-class AmbientLight {
-    Color intensity = Color(0, 0, 0);
+class AmbientLight : public Light{
 
 public:
     AmbientLight(Color iA, Point kA);
     AmbientLight();
-    Color getIntensity();
 };
 
 

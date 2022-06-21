@@ -4,7 +4,7 @@
 #include <list>
 #include "Vector.h"
 #include "Point.h"
-#include "GeoPoint.h"
+#include "geometries/GeoPoint.h"
 
 #ifndef RAYTRACER_RAY_H
 #define RAYTRACER_RAY_H

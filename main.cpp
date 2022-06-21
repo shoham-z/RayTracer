@@ -1,14 +1,15 @@
-#include "include/Vector.h"
-#include "include/Point.h"
-#include "include/Ray.h"
-#include "include/Sphere.h"
-#include "include/Plane.h"
-#include "include/Triangle.h"
-#include "include/Util.h"
-#include "include/Camera.h"
-#include "include/Geometries.h"
-#include "CameraTests.h"
-#include "sphereTests.h"
+#include "primitives/Vector.h"
+#include "primitives/Point.h"
+#include "primitives/Ray.h"
+#include "geometries/Sphere.h"
+#include "geometries/Plane.h"
+#include "geometries/Triangle.h"
+#include "renderer/Camera.h"
+#include "geometries/Geometries.h"
+#include "lights/DirectionalLight.h"
+#include "lights/SpotLight.h"
+#include "lights/PointLight.h"
+#include "tests/LightsTest.h"
 
 void gridTest() {
     Scene scene = Scene("Test scene")
@@ -94,11 +95,10 @@ void basicRenderMultiColorTest() {
 }
 
 int main() {
-    testGetNormal();
-    testConstructRay();
-    testFindIntersections();
     gridTest();
     basicRenderTest();
     basicRenderMultiColorTest();
+    LightsTests();
+
     return 0;
 }

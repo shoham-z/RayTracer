@@ -2,19 +2,14 @@
 // Created by shoham on 6/18/22.
 //
 
-#include "AmbientLight.h"
+#include "lights/AmbientLight.h"
 
-AmbientLight::AmbientLight(Color iA, Point kA) {
-        this->intensity = Color(iA.scale(kA));
+AmbientLight::AmbientLight(Color iA, Point kA) : Light(iA.scale(kA)) {
 }
 
-AmbientLight::AmbientLight() {
-    this->intensity = Color::black();
+AmbientLight::AmbientLight() : Light() {
 
 }
 
-Color AmbientLight::getIntensity() {
-    return this->intensity;
-}
 
 

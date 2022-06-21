@@ -2,11 +2,11 @@
 // Created by shoham on 6/19/22.
 //
 
-#include "CameraTests.h"
-#include "Vector.h"
-#include "Point.h"
-#include "Ray.h"
-#include "Camera.h"
+#include "tests/CameraTests.h"
+#include "primitives/Vector.h"
+#include "primitives/Point.h"
+#include "primitives/Ray.h"
+#include "renderer/Camera.h"
 
 void testConstructRay() {
     Camera camera = Camera(Point::ZERO(), Vector(0, 0, -1), Vector(0, -1, 0)).setVPDistance(10);

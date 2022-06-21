@@ -2,7 +2,7 @@
 // Created by shoham on 6/18/22.
 //
 
-#include "Color.h"
+#include "primitives/Color.h"
 
 Color::Color(double r, double g, double b) {
     if (r < 0 || g < 0 || b < 0) { exit(-1); }

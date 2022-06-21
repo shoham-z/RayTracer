@@ -2,7 +2,7 @@
 // Created by shoham on 6/16/22.
 //
 
-#include "../include/Vector.h"
+#include "primitives/Vector.h"
 
 Vector::Vector(double x, double y, double z) {
     this->x = x;

@@ -6,7 +6,7 @@
 #define RAYTRACER_GEOPOINT_H
 
 
-#include "Point.h"
+#include "primitives/Point.h"
 #include "Geometry.h"
 
 class GeoPoint {

@@ -11,17 +11,21 @@ class Point {
     double x, y, z;
 public:
     Point();
+
     static Point ZERO() { return {0, 0, 0}; };
 
     static Point ONE() { return {1, 1, 1}; };
 
     Point(double x, double y, double z);
+    Point(double x);
 
     Point add(Vector other) const;
 
     Vector subtract(Point point) const;
 
     double distance(Point other) const;
+
+    double distanceSquared(Point other) const;
 
     double getX() const;
 

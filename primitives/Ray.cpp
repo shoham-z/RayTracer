@@ -2,7 +2,7 @@
 // Created by shoham on 6/16/22.
 //
 
-#include "Ray.h"
+#include "primitives/Ray.h"
 
 Ray::Ray(Point start, Vector dir) : dir(dir.normalize()), start(start) {
 }

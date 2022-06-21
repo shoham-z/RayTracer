@@ -9,6 +9,7 @@ add_executable(RayTracer main.cpp
         primitives/Ray.cpp
         primitives/Util.cpp
         primitives/Color.cpp
+        primitives/Material.cpp
         primitives/Point.cpp
         primitives/GeoPoint.cpp
         geometries/Sphere.cpp
@@ -22,6 +23,11 @@ add_executable(RayTracer main.cpp
         renderer/Scene.cpp
         renderer/ImageWriter.cpp
         lights/AmbientLight.cpp
+        lights/Light.cpp
+        lights/LightSource.cpp
+        lights/SpotLight.cpp
+        lights/DirectionalLight.cpp
+        lights/PointLight.cpp
         Tests/CameraTests.cpp
         Tests/sphereTests.cpp)
 

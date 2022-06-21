@@ -2,7 +2,7 @@
 // Created by shoham on 6/17/22.
 //
 
-#include "Geometries.h"
+#include "geometries/Geometries.h"
 
 
 Geometries::Geometries(std::list<Geometry*> newGeometries) {

@@ -2,9 +2,9 @@
 // Created by shoham on 6/19/22.
 //
 
-#include "sphereTests.h"
-#include "Point.h"
-#include "Sphere.h"
+#include "tests/sphereTests.h"
+#include "primitives/Point.h"
+#include "geometries/Sphere.h"
 
 void testGetNormal() {
     // ============ Equivalence Partitions Tests ==============

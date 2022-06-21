@@ -2,7 +2,7 @@
 // Created by shoham on 6/20/22.
 //
 #include "Util.h"
-#include "Plane.h"
+#include "geometries/Plane.h"
 
 std::list <GeoPoint> Plane::findGeoIntersectionsHelper(Ray ray) {
     std::list <GeoPoint> intersection;

@@ -6,7 +6,7 @@
 
 
 #include "Scene.h"
-#include "Color.h"
+#include "primitives/Color.h"
 
 class RayTracer{
 protected:

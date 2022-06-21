@@ -2,7 +2,7 @@
 // Created by shoham on 6/17/22.
 //
 
-#include "ImageWriter.h"
+#include "renderer/ImageWriter.h"
 
 ImageWriter::ImageWriter(std::string imageName, int nX, int nY) {
     this->imageName = imageName;

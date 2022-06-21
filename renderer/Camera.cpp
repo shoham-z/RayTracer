@@ -2,7 +2,7 @@
 // Created by shoham on 6/17/22.
 //
 
-#include "Camera.h"
+#include "renderer/Camera.h"
 
 Camera Camera::setImageWriter(ImageWriter imageWriter1) {
     this->imageWriter = imageWriter1;
@@ -41,7 +41,7 @@ Ray Camera::constructRay(int nX, int nY, int j, int i) {
     return {this->position, pIJ.subtract(this->position)};
 }
 
-void Camera::renderImage() {
+Camera Camera::renderImage() {
     if (this->vpHeight <= 0 || this->vpWidth <= 0 || this->distanceFromVp <= 0) {
         exit(-1);
     }
@@ -52,6 +52,7 @@ void Camera::renderImage() {
             this->imageWriter.writePixel(i, j, this->rayTracer.traceRay(
                     this->constructRay(xPixels, yPixels, j, i)));
     }
+    return *this;
 }
 
 Point Camera::getPosition() {
@@ -82,14 +83,16 @@ double Camera::getDistanceFromVp() {
     return this->distanceFromVp;
 }
 
-void Camera::printGrid(int interval, Color color) {
+Camera Camera::printGrid(int interval, Color color) {
     for (int i = 0; i < this->imageWriter.getWidth(); i++) {
         for (int j = 0; j < this->imageWriter.getHeight(); j++) {
             if (i % interval == 0 || j % interval == 0) this->imageWriter.writePixel(i, j, color);
         }
     }
+    return *this;
 }
 
-void Camera::writeToImage() {
+Camera Camera::writeToImage() {
     this->imageWriter.writeToImage();
+    return *this;
 }

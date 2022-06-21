@@ -3,10 +3,10 @@
 //
 #include "ImageWriter.h"
 #include "RayTracer.h"
-#include "Point.h"
-#include "Vector.h"
-#include "Ray.h"
-#include "Color.h"
+#include "primitives/Point.h"
+#include "primitives/Vector.h"
+#include "primitives/Ray.h"
+#include "primitives/Color.h"
 
 #ifndef RAYTRACER_CAMERA_H
 #define RAYTRACER_CAMERA_H
@@ -41,9 +41,9 @@ public:
     Camera setVPDistance(double distance);
 
     Ray constructRay(int nX, int nY, int j, int i);
-    void renderImage();
-    void printGrid(int interval, Color color);
-    void writeToImage();
+    Camera renderImage();
+    Camera printGrid(int interval, Color color);
+    Camera writeToImage();
 
 };
 

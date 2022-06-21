@@ -3,8 +3,8 @@
 //
 #include <fstream>
 #include <filesystem>
-#include "Vector.h"
-#include "Color.h"
+#include "primitives/Vector.h"
+#include "primitives/Color.h"
 
 
 #ifndef RAYTRACER_IMAGEWRITER_H

@@ -1,11 +1,11 @@
 //
 // Created by shoham on 6/16/22.
 //
-#include "Vector.h"
-#include "Point.h"
+#include "primitives/Vector.h"
+#include "primitives/Point.h"
 #include "Intersectable.h"
-#include "Color.h"
-#include "Material.h"
+#include "primitives/Color.h"
+#include "primitives/Material.h"
 
 #ifndef RAYTRACER_GEOMETRY_H
 #define RAYTRACER_GEOMETRY_H
@@ -13,10 +13,13 @@
 
 class Geometry: public Intersectable {
     Color emission;
+    Material material = Material();
 public:
     virtual Vector getNormal(Point point) = 0;
+    Material getMaterial();
+    Geometry* setMaterial(Material material);
     Color getEmission();
-    void setEmission(Color emission);
+    Geometry* setEmission(Color emission);
 };
 
 

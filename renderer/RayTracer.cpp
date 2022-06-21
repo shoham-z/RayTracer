@@ -2,7 +2,7 @@
 // Created by shoham on 6/17/22.
 //
 
-#include "RayTracer.h"
+#include "renderer/RayTracer.h"
 
 RayTracer::RayTracer(Scene scene) : scene(scene) {
 
@@ -18,7 +18,7 @@ Color RayTracer::traceRay(Ray ray) {
 
 Color RayTracer::calcColor(GeoPoint geoPoint) {
     Color emission = geoPoint.geometry->getEmission();
-    return scene.ambientLight.getIntensity()
+    return scene.ambientLight.getColor()
             .add(emission);
 }
 

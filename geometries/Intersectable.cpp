@@ -1,7 +1,7 @@
 //
 // Created by shoham on 6/16/22.
 //
-#include "Intersectable.h"
+#include "geometries/Intersectable.h"
 
 
 std::list<GeoPoint> Intersectable::findGeoIntersections(Ray ray) {
