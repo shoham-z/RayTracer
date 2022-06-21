@@ -39,7 +39,6 @@ void ImageWriter::writeToImage() {
             ofs << (char) (color.getR())
                 << (char) (color.getG())
                 << (char) (color.getB());       // red, green, blue
-            //std::cout << j << "," << i << std::endl;
         }
 
     ofs.close();
