@@ -15,3 +15,7 @@ Color DirectionalLight::getColor(Point p) {
 Vector DirectionalLight::getL(Point p) {
     return this->dir;
 }
+
+double DirectionalLight::getDistance(Point p) {
+    return std::numeric_limits<double>::max();
+}

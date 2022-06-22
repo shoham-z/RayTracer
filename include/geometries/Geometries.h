@@ -18,7 +18,7 @@ public:
 
     void add(Geometry *newGeometry);
 
-    std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray) override;
+    std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) override;
 
     explicit Geometries(std::list<Geometry *> newGeometries);
 

@@ -4,7 +4,7 @@
 #include "Util.h"
 #include "geometries/Plane.h"
 
-std::list <GeoPoint> Plane::findGeoIntersectionsHelper(Ray ray) {
+std::list <GeoPoint> Plane::findGeoIntersectionsHelper(Ray ray, double maxDistance) {
     std::list <GeoPoint> intersection;
     double denominator = this->normal.dotProduct(ray.getDirection());
     if (Util::isZero(denominator))
@@ -18,7 +18,7 @@ std::list <GeoPoint> Plane::findGeoIntersectionsHelper(Ray ray) {
     }
 
     double t = Util::alignZero(this->normal.dotProduct(u) / denominator);
-    if (t > 0) intersection.emplace_back(this, ray.getPoint(t));
+    if (Util::alignZero(t - maxDistance) <= 0 && t > 0) intersection.emplace_back(this, ray.getPoint(t));
     return intersection;
 }
 

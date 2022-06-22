@@ -27,6 +27,7 @@ Color RayTracer::calcColor(GeoPoint geoPoint, Ray ray) {
         Vector l = lightSource->getL(geoPoint.point);
         double nl = Util::alignZero(n.dotProduct(l));
         if (nl * nv > 0) { // sign(nl) == sing(nv)
+            if (unshaded(geoPoint, lightSource, n, nv)) {
             Color iL = lightSource->getColor(geoPoint.point);
 
             // diffusive
@@ -38,7 +39,18 @@ Color RayTracer::calcColor(GeoPoint geoPoint, Ray ray) {
             color = color.add(iL.scale((minusVR <= 0)? 0 :material.specular * (std::pow(minusVR, material.shininess))));
             // speculat
         }
+        }
     }
     return this->scene.ambientLight.getColor()
             .add(color);
+}
+
+bool RayTracer::unshaded(GeoPoint gp, std::shared_ptr<LightSource> lightSource, Vector n, double nv) {
+    Vector lightDirection = lightSource->getL(gp.point).scale(-1); // from point to light source
+    Vector epsVector = n.scale(nv < 0 ? this->DELTA : -this->DELTA);
+    Point point = gp.point.add(epsVector);
+    Ray lightRay = Ray(point, lightDirection);
+    double lightDistance =lightSource->getDistance(gp.point);
+    std::list<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay,lightDistance );
+    return intersections.empty();
 }

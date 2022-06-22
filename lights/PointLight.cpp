@@ -35,3 +35,7 @@ PointLight PointLight::setKq(double k) {
     this->kQ = k;
     return *this;
 }
+
+double PointLight::getDistance(Point p) {
+    return this->position.distance(p);
+}

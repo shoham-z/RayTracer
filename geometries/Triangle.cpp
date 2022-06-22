@@ -11,8 +11,8 @@ this->vertices[1] = p2;
 this->vertices[2] = p3;
 }
 
-std::list<GeoPoint> Triangle::findGeoIntersectionsHelper(Ray ray) {
-    std::list<GeoPoint> planeIntersection =  Plane::findGeoIntersectionsHelper(ray);
+std::list<GeoPoint> Triangle::findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+    std::list<GeoPoint> planeIntersection =  Plane::findGeoIntersectionsHelper(ray, maxDistance);
     if(planeIntersection.empty()) return planeIntersection;
     Point p0 = ray.getStart();
     Vector v = ray.getDirection();

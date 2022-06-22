@@ -16,7 +16,7 @@ public:
 
     Vector getNormal(Point point) override;
 
-    std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+    std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance);
 };
 
 

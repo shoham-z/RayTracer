@@ -17,8 +17,9 @@ public:
 
     std::list<Point> findIntersections(Ray ray);
 
-    virtual std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray) = 0;
+    virtual std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) = 0;
 
+    std::list<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 
     std::list<GeoPoint> findGeoIntersections(Ray ray);
 };

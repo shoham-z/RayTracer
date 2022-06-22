@@ -27,6 +27,8 @@ public:
 
     Vector getL(Point p) override;
 
+    double getDistance(Point p) override;
+
 };
 
 

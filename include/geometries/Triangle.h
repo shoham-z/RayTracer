@@ -10,7 +10,7 @@ class Triangle: public Plane {
 Point vertices[3];
 public:
     Triangle(Point p1, Point p2, Point p3);
-    std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray) override;
+    std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) override;
 };
 
 

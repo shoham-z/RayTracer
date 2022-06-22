@@ -15,6 +15,8 @@ public:
     virtual Color getColor(Point p) = 0;
 
     virtual Vector getL(Point p) = 0;
+
+    virtual double getDistance(Point p) = 0;
 };
 
 

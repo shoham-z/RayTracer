@@ -95,9 +95,9 @@ void basicRenderMultiColorTest() {
 }
 
 int main() {
-    gridTest();
-    basicRenderTest();
-    basicRenderMultiColorTest();
+    //gridTest();
+    //basicRenderTest();
+    //basicRenderMultiColorTest();
     LightsTests();
 
     return 0;
