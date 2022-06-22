@@ -27,7 +27,7 @@ void ImageWriter::writePixel(int xIndex, int yIndex, Color color) {
 }
 
 void ImageWriter::writeToImage() {
-    std::ofstream ofs(this->FOLDER_PATH + this->imageName + "first.ppm", std::ios_base::out | std::ios_base::binary);
+    std::ofstream ofs(this->FOLDER_PATH + this->imageName + ".ppm", std::ios_base::out | std::ios_base::binary);
 
     ofs << "P6" << std::endl << this->width << ' ' << this->height << std::endl << "255" << std::endl;
 

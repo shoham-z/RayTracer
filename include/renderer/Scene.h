@@ -6,6 +6,7 @@
 #define RAYTRACER_SCENE_H
 
 
+#include <memory>
 #include "geometries/Geometries.h"
 #include "lights/AmbientLight.h"
 #include "lights/LightSource.h"
@@ -16,7 +17,7 @@ public:
     Geometries geometries = Geometries();
     Color background = Color::black();
     AmbientLight ambientLight = AmbientLight(Color(), Point());
-    std::list<LightSource *> lights;
+    std::list< std::shared_ptr<LightSource>> lights;
 
     Scene(std::string name);
 
@@ -24,9 +25,9 @@ public:
 
     Scene addGeometry(Geometry& geometry);
 
-    Scene setLights(std::list<LightSource *> lights);
+    Scene setLights(std::shared_ptr<LightSource> lights);
 
-    Scene addLight(LightSource& lightSource);
+    Scene addLight(const std::shared_ptr<LightSource>& lightSource);
 
     Scene setAmbientLight(AmbientLight light);
 

@@ -15,7 +15,8 @@ protected:
 public:
     explicit RayTracer(Scene scene);
     Color traceRay(Ray ray);
-    Color calcColor(GeoPoint geoPoint);
+    Color calcColor(GeoPoint geoPoint, Ray ray);
+
 };
 
 

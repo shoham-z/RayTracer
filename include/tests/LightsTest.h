@@ -21,9 +21,6 @@
 
 class LightsTests {
 public:
-    Scene scene1 = Scene("Test scene");
-    Scene scene2 = Scene("Test scene") //
-            .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
     Camera camera1 = Camera(Point(0, 0, 1000), Vector(0, 0, -1), Vector(0, 1, 0)) //
             .setVPSize(150, 150) //
             .setVPDistance(1000);
@@ -56,7 +53,6 @@ public:
         sphereDirectional();
         sphereMultipleLights();
         spherePoint();
-        spherePoint1();
         sphereSpot();
         sphereSpotSharp();
         trianglesDirectional();
@@ -71,9 +67,11 @@ public:
      */
 
     void sphereDirectional() {
+        Scene scene1 = Scene("Test scene");
         scene1.geometries.add(&sphere);
-        DirectionalLight light = DirectionalLight(Vector(1, 1, -0.5), spCL);
-        scene1.lights.push_back(&light);
+        std::shared_ptr<DirectionalLight> light = std::make_shared<DirectionalLight>(
+                DirectionalLight(Vector(1, 1, -0.5), spCL));
+        scene1.lights.push_back(light);
 
         ImageWriter imageWriter = ImageWriter("lightSphereDirectional", 500, 500);
         camera1.setImageWriter(imageWriter) //
@@ -87,9 +85,12 @@ public:
      */
 
     void spherePoint() {
+        Scene scene1 = Scene("Test scene");
+
         scene1.geometries.add(&sphere);
-        PointLight light = PointLight(spPL, spCL).setKl(0.001).setKq(0.0002);
-        scene1.lights.push_back(&light);
+        std::shared_ptr<PointLight> light = std::make_shared<PointLight>(
+                PointLight(spPL, spCL).setKl(0.001).setKq(0.0002));
+        scene1.lights.push_back(light);
 
         ImageWriter imageWriter = ImageWriter("lightSpherePoint", 500, 500);
         camera1.setImageWriter(imageWriter) //
@@ -98,26 +99,19 @@ public:
                 .writeToImage(); //
     }
 
-    void spherePoint1() {
-        scene1.geometries.add(&sphere);
-        PointLight light = PointLight(spPL, spCL).setKl(0.001).setKq(0.0002);
-        scene1.lights.push_back(&light);
-
-        ImageWriter imageWriter = ImageWriter("lightSpherePoint1", 500, 500);
-        camera1.setImageWriter(imageWriter) //
-                .setRayTracer(RayTracer(scene1)) //
-                .renderImage() //
-                .writeToImage(); //
-    }
 
     /**
      * Produce a picture of a sphere lighted by a spot light
      */
 
     void sphereSpot() {
+        Scene scene1 = Scene("Test scene");
+
         scene1.geometries.add(&sphere);
-        PointLight light = SpotLight(spPL, Vector(1, 1, -0.5), spCL).setKl(0.001).setKq(0.0001);
-        scene1.lights.push_back(&light);
+        std::shared_ptr<SpotLight> light = std::make_shared<SpotLight>(
+                SpotLight(spPL, Vector(1, 1, -0.5), spCL).setKl(0.001).setKq(0.0001));
+
+        scene1.lights.push_back(light);
 
         ImageWriter imageWriter = ImageWriter("lightSphereSpot", 500, 500);
         camera1.setImageWriter(imageWriter) //
@@ -131,10 +125,12 @@ public:
      */
 
     void trianglesDirectional() {
+        Scene scene2 = Scene("Test scene") //
+                .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
         scene2.geometries.add(&triangle1);
         scene2.geometries.add(&triangle2);
-        DirectionalLight light = DirectionalLight(trDL, trCL);
-        scene2.lights.push_back(&light);
+        std::shared_ptr<DirectionalLight> light = std::make_shared<DirectionalLight>(DirectionalLight(trDL, trCL));
+        scene2.lights.push_back(light);
 
         ImageWriter imageWriter = ImageWriter("lightTrianglesDirectional", 500, 500);
         camera2.setImageWriter(imageWriter) //
@@ -148,10 +144,13 @@ public:
      */
 
     void trianglesPoint() {
+        Scene scene2 = Scene("Test scene") //
+                .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
         scene2.geometries.add(&triangle1);
         scene2.geometries.add(&triangle2);
-        PointLight light = PointLight(trPL, trCL).setKl(0.001).setKq(0.0002);
-        scene2.lights.push_back(&light);
+        std::shared_ptr<PointLight> light = std::make_shared<PointLight>(
+                PointLight(trPL, trCL).setKl(0.001).setKq(0.0002));
+        scene2.lights.push_back(light);
 
         ImageWriter imageWriter = ImageWriter("lightTrianglesPoint", 500, 500);
         camera2.setImageWriter(imageWriter) //
@@ -165,10 +164,13 @@ public:
      */
 
     void trianglesSpot() {
+        Scene scene2 = Scene("Test scene") //
+                .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
         scene2.geometries.add(&triangle1);
         scene2.geometries.add(&triangle2);
-        PointLight light = SpotLight(trPL, trDL, trCL).setKl(0.001).setKq(0.0001);
-        scene2.lights.push_back(&light);
+        std::shared_ptr<SpotLight> light = std::make_shared<SpotLight>(
+                SpotLight(trPL, trDL, trCL).setKl(0.001).setKq(0.0001));
+        scene2.lights.push_back(light);
 
         ImageWriter imageWriter = ImageWriter("lightTrianglesSpot", 500, 500);
         camera2.setImageWriter(imageWriter) //
@@ -182,9 +184,12 @@ public:
      */
 
     void sphereSpotSharp() {
+        Scene scene1 = Scene("Test scene");
+
         scene1.geometries.add(&sphere);
-        PointLight light = SpotLight(spPL, Vector(1, 1, -0.5), spCL).setNarrowBeam(10).setKl(0.001).setKq(0.00004);
-        scene1.lights.push_back(&light);
+        std::shared_ptr<SpotLight> light = std::make_shared<SpotLight>(
+                SpotLight(spPL, Vector(1, 1, -0.5), spCL).setNarrowBeam(10).setKl(0.001).setKq(0.00004));
+        scene1.lights.push_back(light);
 
         ImageWriter imageWriter = ImageWriter("lightSphereSpotSharp", 500, 500);
         camera1.setImageWriter(imageWriter) //
@@ -198,10 +203,13 @@ public:
      */
 
     void trianglesSpotSharp() {
+        Scene scene2 = Scene("Test scene") //
+                .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
         scene2.geometries.add(&triangle1);
         scene2.geometries.add(&triangle2);
-        PointLight light = SpotLight(trPL, trDL, trCL).setNarrowBeam(10).setKl(0.001).setKq(0.00004);
-        scene2.lights.push_back(&light);
+        std::shared_ptr<SpotLight> light = std::make_shared<SpotLight>(
+                SpotLight(trPL, trDL, trCL).setNarrowBeam(10).setKl(0.001).setKq(0.00004));
+        scene2.lights.push_back(light);
 
         ImageWriter imageWriter = ImageWriter("lightTrianglesSpotSharp", 500, 500);
         camera2.setImageWriter(imageWriter) //
@@ -215,14 +223,19 @@ public:
      */
 
     void sphereMultipleLights() {
+        Scene scene1 = Scene("Test scene");
+
         scene1.geometries.add(&sphere);
-        DirectionalLight light = DirectionalLight(Vector(1, 1, -0.5), Color::red().scale(2));
-        scene1.lights.push_back(&light);
-        light = DirectionalLight(Vector(-1, -1, -0.5), Color::red().add(Color::green()).scale(2));
-        scene1.lights.push_back(&light);
-        PointLight light1 = PointLight(Point(50, -50, 0), Color::blue().add(Color::green().scale(2))).setKl(
-                0.001).setKq(0.0002);
-        scene1.lights.push_back(&light1);
+        std::shared_ptr<DirectionalLight> light = std::make_shared<DirectionalLight>(
+                DirectionalLight(Vector(1, 1, -0.5), Color::red().scale(2)));
+        scene1.lights.push_back(light);
+        light = std::make_shared<DirectionalLight>(
+                DirectionalLight(Vector(-1, -1, -0.5), Color::red().add(Color::green()).scale(2)));
+        scene1.lights.push_back(light);
+        std::shared_ptr<PointLight> light1 = std::make_shared<PointLight>(
+                PointLight(Point(50, -50, 0), Color::blue().add(Color::green().scale(2))).setKl(
+                        0.001).setKq(0.0002));
+        scene1.lights.push_back(light1);
 
 
         ImageWriter imageWriter = ImageWriter("multipleLightSphere", 500, 500);
@@ -237,14 +250,19 @@ public:
      */
 
     void trianglesMultipleLights() {
+        Scene scene2 = Scene("Test scene") //
+                .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
         scene2.geometries.add(&triangle1);
         scene2.geometries.add(&triangle2);
-        PointLight light = PointLight(trPL, purple).setKl(0.001).setKq(0.0002);
-        scene2.lights.push_back(&light);
-        light = PointLight(Point(30, -60, -100), Color::green()).setKl(0.001).setKq(0.0002);
-        scene2.lights.push_back(&light);
-        DirectionalLight light1 = DirectionalLight(trDL, Color::blue());
-        scene2.lights.push_back(&light1);
+        std::shared_ptr<PointLight> light = std::make_shared<PointLight>(
+                PointLight(trPL, purple).setKl(0.001).setKq(0.0002));
+        scene2.lights.push_back(light);
+        light = std::make_shared<PointLight>(
+                PointLight(Point(30, -60, -100), Color::green()).setKl(0.001).setKq(0.0002));
+        scene2.lights.push_back(light);
+        std::shared_ptr<DirectionalLight> light1 = std::make_shared<DirectionalLight>(
+                DirectionalLight(trDL, Color::blue()));
+        scene2.lights.push_back(light1);
 
 
         ImageWriter imageWriter = ImageWriter("multipleLightTriangles", 500, 500);

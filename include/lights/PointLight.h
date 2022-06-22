@@ -9,13 +9,17 @@
 #include "Light.h"
 
 class PointLight : public Light, public LightSource {
-    double kC, kL, kQ;
 protected:
     Point position;
+    double kQ;
+    double kL;
+    double kC;
 public:
     PointLight(Point position, Color color);
 
     PointLight setKc(double k);
+
+    PointLight setKl(double k);
 
     PointLight setKq(double k);
 
@@ -23,7 +27,6 @@ public:
 
     Vector getL(Point p) override;
 
-    PointLight setKl(double k);
 };
 
 

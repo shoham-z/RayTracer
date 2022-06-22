@@ -8,17 +8,23 @@
 #include "PointLight.h"
 
 class SpotLight : public PointLight {
-    int beam;
+    int beam = 1;
     Vector dir;
 
 public:
     SpotLight(Point position, Vector dir, Color color);
 
+    SpotLight setKc(double k);
+
+    SpotLight setKl(double k);
+
+    SpotLight setKq(double k);
+
     Color getColor(Point p) override;
 
     Vector getL(Point p) override;
 
-    PointLight setNarrowBeam(int i);
+    SpotLight setNarrowBeam(int i);
 };
 
 

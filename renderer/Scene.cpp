@@ -30,13 +30,13 @@ Scene Scene::addGeometry(Geometry& geometry) {
     return *this;
 }
 
-Scene Scene::setLights(std::list<LightSource *> lights) {
+Scene Scene::setLights(std::shared_ptr<LightSource> lights) {
 
-    this->lights = std::move(lights);
+    this->lights.push_back(lights);
     return *this;
 }
 
-Scene Scene::addLight(LightSource& lightSource) {
-    this->lights.push_back(&lightSource);
+Scene Scene::addLight(const std::shared_ptr<LightSource>& lightSource) {
+    this->lights.push_back(lightSource);
     return *this;
 }
