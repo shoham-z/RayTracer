@@ -18,6 +18,7 @@ public:
 
 
     bool operator==(GeoPoint &other);
+    bool operator!();
 
 };
 

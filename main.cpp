@@ -10,6 +10,7 @@
 #include "lights/SpotLight.h"
 #include "lights/PointLight.h"
 #include "tests/LightsTest.h"
+#include "tests/reflectionTranparencyTests.h"
 
 void gridTest() {
     Scene scene = Scene("Test scene")
@@ -99,6 +100,8 @@ int main() {
     //basicRenderTest();
     //basicRenderMultiColorTest();
     LightsTests();
-
+    reflectionTranparencyTests::trianglesTransparentSphere();
+    reflectionTranparencyTests::twoSpheres();
+    reflectionTranparencyTests::twoSpheresOnMirrors();
     return 0;
 }

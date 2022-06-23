@@ -5,6 +5,7 @@
 #include "renderer/Scene.h"
 
 #include <utility>
+#include <memory>
 
 Scene::Scene(std::string name) : ambientLight(Color(), Point()) {
     this->name = std::move(name);
@@ -25,8 +26,8 @@ Scene Scene::setAmbientLight(AmbientLight light) {
     return *this;
 }
 
-Scene Scene::addGeometry(Geometry& geometry) {
-    this->geometries.add(&geometry);
+Scene Scene::addGeometry(std::shared_ptr<Geometry> geometry) {
+    this->geometries.add(geometry);
     return *this;
 }
 

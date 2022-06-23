@@ -16,9 +16,19 @@ Material Material::setDiffusive(double d) {
 
 Material Material::setShininess(int shine) {
     this->shininess = shine;
-    return * this;
+    return *this;
 }
 
 Material::Material() {
 
+}
+
+Material Material::setTransparent(double t) {
+    this->transparent = t;
+    return *this;
+}
+
+Material Material::setReflective(double r) {
+    this->reflective = r;
+    return *this;
 }

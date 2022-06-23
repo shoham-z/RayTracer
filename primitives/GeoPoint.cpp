@@ -16,4 +16,8 @@ bool GeoPoint::operator==(GeoPoint &other) {
     return this->geometry == other.geometry && this->point == other.point;
 }
 
+bool GeoPoint::operator!() {
+    return !geometry;
+}
+
 

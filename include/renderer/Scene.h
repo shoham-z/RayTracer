@@ -23,7 +23,7 @@ public:
 
     Scene setGeometries(Geometries geometries);
 
-    Scene addGeometry(Geometry& geometry);
+    Scene addGeometry(std::shared_ptr<Geometry> geometry);
 
     Scene setLights(std::shared_ptr<LightSource> lights);
 

@@ -7,6 +7,12 @@
 Ray::Ray(Point start, Vector dir) : dir(dir.normalize()), start(start) {
 }
 
+Ray::Ray(Point head, Vector direction, Vector normal) :
+        start(Point()),
+        dir(direction.normalize()) {
+    this->start = head.add(normal.scale(normal.dotProduct(direction) > 0 ? this->DELTA : -this->DELTA));
+}
+
 bool Ray::operator==(Ray &ray) {
     return this->dir == ray.dir && this->start == ray.start;
 }
@@ -30,9 +36,9 @@ Vector Ray::getDirection() {
 
 Point Ray::findClosestPoint(std::list<Point> points) {
 
-    Point point = Point(0,0,0);
+    Point point = Point(0, 0, 0);
     double distance = std::numeric_limits<double>::max();
-    for (Point geoPoint : points) {
+    for (Point geoPoint: points) {
         double d = this->start.distance(point);
         if (d < distance) {
             distance = d;

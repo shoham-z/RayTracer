@@ -9,18 +9,18 @@
 
 
 class Geometries : public Intersectable {
-    std::list<Geometry *> geometries;
+    std::list<std::shared_ptr<Geometry>> geometries;
 
 
 public:
 
-    void add(std::list<Geometry *> newGeometries);
+    void add(std::list<std::shared_ptr<Geometry>> newGeometries);
 
-    void add(Geometry *newGeometry);
+    void add(const std::shared_ptr<Geometry>& newGeometry);
 
     std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) override;
 
-    explicit Geometries(std::list<Geometry *> newGeometries);
+    explicit Geometries(std::list<std::shared_ptr<Geometry>> newGeometries);
 
     Geometries();
 };

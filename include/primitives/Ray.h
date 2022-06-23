@@ -15,8 +15,13 @@ class GeoPoint;
 class Ray {
     Point start;
     Vector dir;
+
+    const double DELTA = 0.1;
 public:
     Ray(Point start, Vector dir);
+
+    Ray(Point head, Vector direction, Vector normal);
+
 
     /**
      * Calculates a point on the line of the ray at a given distance from the starting point
