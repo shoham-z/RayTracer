@@ -37,7 +37,8 @@ std::list<GeoPoint> Sphere::findGeoIntersectionsHelper(Ray ray, double maxDistan
             t1 <= 0 ? intersections.emplace_back(GeoPoint(this, ray.getPoint(t2))) : intersections.emplace_back(
                     GeoPoint(this, ray.getPoint(t1)));
 
-        intersections.emplace_back(GeoPoint(this, ray.getPoint(t2)));
+        if (t1<=0)  intersections.emplace_back(GeoPoint(this, ray.getPoint(t2)));
+        else  {intersections.emplace_back(GeoPoint(this, ray.getPoint(t1))); intersections.emplace_back(GeoPoint(this, ray.getPoint(t2)));}
     }
     return intersections;
 }

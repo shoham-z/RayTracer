@@ -37,7 +37,7 @@ Color RayTracer::calcColor(GeoPoint geoPoint, Ray ray) {
             Vector minusR = n.scale(2 * nl).subtract(l);
             double minusVR = minusR.dotProduct(v);
             color = color.add(iL.scale((minusVR <= 0)? 0 :material.specular * (std::pow(minusVR, material.shininess))));
-            // speculat
+            // specular
         }
         }
     }

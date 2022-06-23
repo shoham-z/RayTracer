@@ -73,7 +73,7 @@ public:
                 DirectionalLight(Vector(1, 1, -0.5), spCL));
         scene1.lights.push_back(light);
 
-        ImageWriter imageWriter = ImageWriter("lightSphereDirectional", 1, 1);
+        ImageWriter imageWriter = ImageWriter("lightSphereDirectional", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene1)) //
                 .renderImage() //
