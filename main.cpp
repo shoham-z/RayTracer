@@ -35,15 +35,15 @@ void basicRenderTest() {
             .setBackground(Color(75, 127, 90));
 
     Sphere sphere = Sphere(Point(0, 0, -100), 50);
-    scene.geometries.add(&sphere);
+    scene.geometries.add(std::make_shared<Sphere>(sphere));
     Triangle triangle1 = Triangle(Point(-100, 0, -100), Point(0, 100, -100), Point(-100, 100, -100)); // up
-    scene.geometries.add(&triangle1);
+    scene.geometries.add(std::make_shared<Triangle>(triangle1));
     // left
     Triangle triangle2 = Triangle(Point(-100, 0, -100), Point(0, -100, -100), Point(-100, -100, -100)); // down left
-    scene.geometries.add(&triangle2);
+    scene.geometries.add(std::make_shared<Triangle>(triangle2));
 
     Triangle triangle3 = Triangle(Point(100, 0, -100), Point(0, -100, -100), Point(100, -100, -100)); // down
-    scene.geometries.add(&triangle3);
+    scene.geometries.add(std::make_shared<Triangle>(triangle3));
 
     // right
     Camera camera = Camera(Point::ZERO(), Vector(0, 0, -1), Vector(0, 1, 0)) //
@@ -65,24 +65,24 @@ void basicRenderMultiColorTest() {
 
 
     Sphere sphere = Sphere(Point(0, 0, -100), 50);
-    scene.geometries.add(&sphere);
+    scene.geometries.add(std::make_shared<Sphere>(sphere));
     // up left
 
     //Pointers are bad idea
     Triangle triangle1 = Triangle(Point(-100, 0, -100), Point(0, 100, -100), Point(-100, 100, -100));
             triangle1.setEmission(Color::green());
-    scene.geometries.add(&triangle1);
+    scene.geometries.add(std::make_shared<Triangle>(triangle1));
 
 
     // down left
     Triangle triangle2 = Triangle(Point(-100, 0, -100), Point(0, -100, -100), Point(-100, -100, -100));
             triangle2.setEmission(Color::red());
-    scene.geometries.add(&triangle2);
+    scene.geometries.add(std::make_shared<Triangle>(triangle2));
 
     // down right
     Triangle triangle3 = Triangle(Point(100, 0, -100), Point(0, -100, -100), Point(100, -100, -100));
             triangle3.setEmission(Color::blue());
-    scene.geometries.add(&triangle3);
+    scene.geometries.add(std::make_shared<Triangle>(triangle3));
 
     Camera camera = Camera(Point::ZERO(), Vector(0, 0, -1), Vector(0, 1, 0)) //
             .setVPDistance(100) //

@@ -40,3 +40,13 @@ Vector Plane::getNormal() {
 Vector Plane::getNormal(Point point) {
     return this->normal;
 }
+
+Plane Plane::setMaterial(Material material) {
+        this->material = material;
+        return *this;
+}
+
+Plane Plane::setEmission(Color emission) {
+    this->emission = emission;
+    return *this;
+}
