@@ -53,3 +53,4 @@ Sphere Sphere::setMaterial(Material material) {
     return *this;
 }
 
+

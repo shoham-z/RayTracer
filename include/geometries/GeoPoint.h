@@ -12,13 +12,13 @@
 class GeoPoint {
 public:
     Point point;
-    Geometry* geometry{};
+    Geometry* geometry = nullptr;
     GeoPoint(Geometry *geometry, Point point);
     GeoPoint();
 
 
-    bool operator==(GeoPoint &other);
-    bool operator!();
+    bool operator==(GeoPoint &other) const;
+    bool operator!() const;
 
 };
 

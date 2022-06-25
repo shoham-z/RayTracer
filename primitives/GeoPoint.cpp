@@ -12,12 +12,12 @@ GeoPoint::GeoPoint() : point() {
 
 }
 
-bool GeoPoint::operator==(GeoPoint &other) {
+bool GeoPoint::operator==(GeoPoint &other) const {
     return this->geometry == other.geometry && this->point == other.point;
 }
 
-bool GeoPoint::operator!() {
-    return !geometry;
+bool GeoPoint::operator!() const {
+    return geometry == nullptr;
 }
 
 

@@ -4,10 +4,9 @@
 
 #include "geometries/Geometry.h"
 
-Color Geometry::getEmission() {
-    return this->emission;
-}
-
 Material Geometry::getMaterial() {
     return this->material;
+}
+Color Geometry::getEmission(){
+    return this->emission;
 }

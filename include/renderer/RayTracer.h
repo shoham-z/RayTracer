@@ -24,7 +24,7 @@ public:
 
 private:
     Color calcGlobalEffect(Ray ray, int level, double kx, double kkx);
-    Color calcGlobalEffects(GeoPoint gp, Vector v, int level, double k);
+    Color calcGlobalEffects(GeoPoint geoPoint, Vector v, int level, double k);
 
     double transparency(GeoPoint gp, const std::shared_ptr<LightSource>& light, Vector l, Vector n);
     Color calcLocalEffects(GeoPoint geoPoint, Ray ray, double k);

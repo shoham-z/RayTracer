@@ -48,3 +48,4 @@ Triangle Triangle::setEmission(Color emission) {
     this->emission = emission;
     return *this;
 }
+

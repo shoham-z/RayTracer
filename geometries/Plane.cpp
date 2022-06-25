@@ -50,3 +50,4 @@ Plane Plane::setEmission(Color emission) {
     this->emission = emission;
     return *this;
 }
+
