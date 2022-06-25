@@ -45,7 +45,7 @@ Color RayTracer::calcColor(GeoPoint gp, Ray ray, int level, double k) {
 }
 
 Color RayTracer::calcLocalEffects(GeoPoint geoPoint, Ray ray, double k) {
-    if(!geoPoint) return Color::black();
+    if (!geoPoint) return Color::black();
     Color color = geoPoint.geometry->getEmission();
     Vector v = ray.getDirection();
     Vector n = geoPoint.geometry->getNormal(geoPoint.point);
@@ -76,13 +76,13 @@ Color RayTracer::calcLocalEffects(GeoPoint geoPoint, Ray ray, double k) {
             .add(color);
 }
 
-bool RayTracer::unshaded(GeoPoint gp, const std::shared_ptr<LightSource>& lightSource, Vector n, double nv) {
+bool RayTracer::unshaded(GeoPoint gp, const std::shared_ptr<LightSource> &lightSource, Vector n, double nv) {
     Vector lightDirection = lightSource->getL(gp.point).scale(-1); // from point to light source
     Vector epsVector = n.scale(nv < 0 ? this->DELTA : -this->DELTA);
     Point point = gp.point.add(epsVector);
     Ray lightRay = Ray(point, lightDirection);
     double lightDistance = lightSource->getDistance(gp.point);
-    std::list<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, lightDistance);
+    std::list<GeoPoint> intersections = this->scene.geometries.findGeoIntersections(lightRay, lightDistance);
     return intersections.empty();
 }
 
@@ -102,19 +102,21 @@ GeoPoint RayTracer::findClosestIntersection(Ray ray) {
 
 Color RayTracer::calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
     GeoPoint gp = findClosestIntersection(ray);
-    return (!gp ? scene.background : calcColor(gp, ray, level - 1, kkx)).scale(kx);
+    return (!gp ? this->scene.background : calcColor(gp, ray, level - 1, kkx)).scale(kx);
 }
 
 Color RayTracer::calcGlobalEffects(GeoPoint geoPoint, Vector v, int level, double k) {
-    if(!geoPoint) return Color::black();
+    if (!geoPoint) return Color::black();
     Color color = Color::black();
     Vector n = geoPoint.geometry->getNormal(geoPoint.point);
     Material material = geoPoint.geometry->getMaterial();
     double kkr = k * material.reflective;
     if (kkr >= MIN_CALC_COLOR_K)
-        color = calcGlobalEffect(constructReflectedRay(geoPoint.point, v, n), level, material.reflective, kkr);
+        color = color.add(
+                calcGlobalEffect(constructReflectedRay(geoPoint.point, v, n), level, material.reflective, kkr));
     double kkt = k * material.transparent;
     if (kkt >= MIN_CALC_COLOR_K)
-        color = color.add(calcGlobalEffect(constructRefractedRay(geoPoint.point, v, n), level, material.transparent, kkt));
+        color = color.add(
+                calcGlobalEffect(constructRefractedRay(geoPoint.point, v, n), level, material.transparent, kkt));
     return color;
 }
