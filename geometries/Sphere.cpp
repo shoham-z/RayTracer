@@ -43,3 +43,13 @@ std::list<GeoPoint> Sphere::findGeoIntersectionsHelper(Ray ray, double maxDistan
     return intersections;
 }
 
+Sphere Sphere::setEmission(Color emission) {
+    this->emission = emission;
+    return *this;
+}
+
+Sphere Sphere::setMaterial(Material material) {
+    this->material = material;
+    return *this;
+}
+

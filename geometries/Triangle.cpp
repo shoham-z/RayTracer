@@ -38,3 +38,13 @@ std::list<GeoPoint> Triangle::findGeoIntersectionsHelper(Ray ray, double maxDist
     intersection.emplace_back(GeoPoint(this, intersect));
     return intersection;
 }
+
+Triangle Triangle::setMaterial(Material material) {
+    this->material = material;
+    return *this;
+}
+
+Triangle Triangle::setEmission(Color emission) {
+    this->emission = emission;
+    return *this;
+}

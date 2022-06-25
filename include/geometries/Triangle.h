@@ -11,6 +11,9 @@ Point vertices[3];
 public:
     Triangle(Point p1, Point p2, Point p3);
     std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) override;
+
+Triangle    setMaterial(Material material);
+Triangle  setEmission(Color emission);
 };
 
 

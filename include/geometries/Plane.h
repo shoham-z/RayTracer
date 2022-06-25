@@ -17,6 +17,9 @@ public:
     Vector getNormal();
     Vector getNormal(Point point) override;
     std::list<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) override;
+
+    Plane setMaterial(Material material);
+    Plane  setEmission(Color emission);
 };
 
 

@@ -12,14 +12,13 @@
 
 
 class Geometry: public Intersectable {
+    protected:
     Color emission;
     Material material = Material();
 public:
     virtual Vector getNormal(Point point) = 0;
     Material getMaterial();
-    Geometry* setMaterial(Material material);
     Color getEmission();
-    Geometry* setEmission(Color emission);
 };
 
 
