@@ -23,9 +23,9 @@ public:
 
     Scene setGeometries(Geometries geometries);
 
-    Scene addGeometry(std::shared_ptr<Geometry> geometry);
+    Scene addGeometry(const std::shared_ptr<Geometry>& geometry);
 
-    Scene setLights(std::shared_ptr<LightSource> lights);
+    Scene setLights(const std::shared_ptr<LightSource>& lights);
 
     Scene addLight(const std::shared_ptr<LightSource>& lightSource);
 
