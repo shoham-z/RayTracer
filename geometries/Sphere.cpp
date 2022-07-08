@@ -16,14 +16,15 @@ std::list<GeoPoint> Sphere::findGeoIntersectionsHelper(Ray ray, double maxDistan
     std::list<GeoPoint> intersections;
     Vector u = Vector(0, 0, 0);
     if (ray.getStart() == this->center) {
-        intersections.emplace_back(this, ray.getPoint(this->radius));
+        intersections.emplace_back(GeoPoint(this, ray.getPoint(this->radius)));
         return intersections;
     } else
         u = this->center.subtract(ray.getStart());
 
     double tm = ray.getDirection().dotProduct(u);
     double d2 = u.lengthSquared() - (tm * tm);
-    if (d2 <= 0) return intersections;
+    if (d2 < 0) return intersections;
+
     double th2 = Util::alignZero(this->radius * this->radius - d2);
     if (th2 > 0) {
 

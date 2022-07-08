@@ -9,6 +9,7 @@
 #include "primitives/Color.h"
 
 class RayTracer {
+    static const int INITIAL_K = 1;
     static const int MAX_CALC_COLOR_LEVEL = 10;
     constexpr static const double MIN_CALC_COLOR_K = 0.001;
 protected:

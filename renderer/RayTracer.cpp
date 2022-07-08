@@ -17,7 +17,12 @@ Color RayTracer::traceRay(Ray ray) {
 }
 
 Color RayTracer::calcColor(GeoPoint geoPoint, Ray ray) {
-    return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, MIN_CALC_COLOR_K).add(this->scene.ambientLight.getColor());
+    return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K).add(this->scene.ambientLight.getColor());
+}
+
+Color RayTracer::calcColor(GeoPoint gp, Ray ray, int level, double k) {
+    Color color = calcLocalEffects(gp, ray, k);
+    return 1 == level ? color : color.add(calcGlobalEffects(gp, ray.getDirection(), level, k));
 }
 
 double RayTracer::transparency(GeoPoint gp, const std::shared_ptr<LightSource> &light, Vector l, Vector n) {
@@ -37,11 +42,6 @@ double RayTracer::transparency(GeoPoint gp, const std::shared_ptr<LightSource> &
     }
 
     return ktr;
-}
-
-Color RayTracer::calcColor(GeoPoint gp, Ray ray, int level, double k) {
-    Color color = calcLocalEffects(gp, ray, k);
-    return 1 == level ? color : color.add(calcGlobalEffects(gp, ray.getDirection(), level, k));
 }
 
 Color RayTracer::calcLocalEffects(GeoPoint geoPoint, Ray ray, double k) {
