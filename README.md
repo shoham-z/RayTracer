@@ -1,6 +1,6 @@
 # RayTracer
 This is a ray tracer that saves images to the disk.
-The original was written in java and is being rewritten in c++ because with java it is slow.
+The original was written in java and I am rewriting in c++ because I wanted to experiment.
 
 # TO DO
 - Create classes for Cylinder, Tube (infinite cylinder), Plane, Triangle - Cylinder left.
