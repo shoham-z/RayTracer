@@ -11,6 +11,7 @@
 #include "lights/PointLight.h"
 #include "tests/LightsTest.h"
 #include "tests/reflectionTransparencyTests.h"
+#include "geometries/Tube.h"
 
 void gridTest();
 
@@ -18,7 +19,36 @@ void basicRenderTest();
 
 void basicRenderMultiColorTest();
 
+void tubeTest() {
+    Camera camera = Camera(Point(0, 0, -1000), Vector(0, 0, 1), Vector(0, 1, 0))
+            .setVPSize(160, 160) // 16x9 scaled by 20
+            .setVPDistance(1000);
+
+    Scene scene = Scene("Tube");//.setBackground(Color(135, 206, 235));
+    //.setAmbientLight(AmbientLight(Color(249,215,28),Double3(0.5)))
+
+    scene.addGeometry(
+            std::make_shared<Tube>(Tube(Ray(Point(0, 0, 50), camera.getvTo().subtract(camera.getvUp())), 50)
+                                               .setMaterial(Material().setDiffusive(0.5).setSpecular(0.5).setShininess(
+                                                       20).setTransparent(0))
+                                               .setEmission(Color::red().reduce(2))));
+
+
+    scene.addLight(std::make_shared<SpotLight>(SpotLight(Point(100, 100, 0), Vector(-1, -1, 1), Color(255, 0, 255))
+                             .setNarrowBeam(10).setKl(0.00001).setKq(0.00001)));
+    scene.addLight(std::make_shared<SpotLight>(SpotLight(Point(-100, -100, 0), Vector(1, 1, 1),Color::red().add(Color::blue()))
+                             .setNarrowBeam(10).setKl(0.00001).setKq(0.00001)));
+
+    ImageWriter imageWriter = ImageWriter("Tube", 500, 500);
+    camera.setImageWriter(imageWriter) //
+            .setRayTracer(RayTracer(scene)) //
+            .renderImage() //
+            .writeToImage(); //
+}
+
 int main() {
+    tubeTest();
+
     gridTest();
     basicRenderTest();
     basicRenderMultiColorTest();

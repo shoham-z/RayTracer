@@ -18,6 +18,7 @@ add_executable(RayTracer main.cpp
         geometries/Geometry.cpp
         geometries/Geometries.cpp
         geometries/Intersectable.cpp
+        geometries/Tube.cpp
         renderer/Camera.cpp
         renderer/RayTracer.cpp
         renderer/Scene.cpp
