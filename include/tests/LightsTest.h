@@ -68,7 +68,7 @@ public:
 
     void sphereDirectional() {
         Scene scene1 = Scene("Test scene");
-        scene1.geometries.add(std::make_shared<Sphere>(sphere));
+        scene1.geometries.addShared(std::make_shared<Sphere>(sphere));
         std::shared_ptr<DirectionalLight> light = std::make_shared<DirectionalLight>(
                 DirectionalLight(Vector(1, 1, -0.5), spCL));
         scene1.lights.push_back(light);
@@ -87,7 +87,7 @@ public:
     void spherePoint() {
         Scene scene1 = Scene("Test scene");
 
-        scene1.geometries.add(std::make_shared<Sphere>(sphere));
+        scene1.geometries.addShared(std::make_shared<Sphere>(sphere));
         std::shared_ptr<PointLight> light = std::make_shared<PointLight>(
                 PointLight(spPL, spCL).setKl(0.001).setKq(0.0002));
         scene1.lights.push_back(light);
@@ -107,7 +107,7 @@ public:
     void sphereSpot() {
         Scene scene1 = Scene("Test scene");
 
-        scene1.geometries.add(std::make_shared<Sphere>(sphere));
+        scene1.geometries.addShared(std::make_shared<Sphere>(sphere));
         std::shared_ptr<SpotLight> light = std::make_shared<SpotLight>(
                 SpotLight(spPL, Vector(1, 1, -0.5), spCL).setKl(0.001).setKq(0.0001));
 
@@ -127,8 +127,8 @@ public:
     void trianglesDirectional() {
         Scene scene2 = Scene("Test scene") //
                 .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle1));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle2));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle1));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle2));
         std::shared_ptr<DirectionalLight> light = std::make_shared<DirectionalLight>(DirectionalLight(trDL, trCL));
         scene2.lights.push_back(light);
 
@@ -146,8 +146,8 @@ public:
     void trianglesPoint() {
         Scene scene2 = Scene("Test scene") //
                 .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle1));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle2));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle1));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle2));
         std::shared_ptr<PointLight> light = std::make_shared<PointLight>(
                 PointLight(trPL, trCL).setKl(0.001).setKq(0.0002));
         scene2.lights.push_back(light);
@@ -166,8 +166,8 @@ public:
     void trianglesSpot() {
         Scene scene2 = Scene("Test scene") //
                 .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle1));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle2));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle1));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle2));
         std::shared_ptr<SpotLight> light = std::make_shared<SpotLight>(
                 SpotLight(trPL, trDL, trCL).setKl(0.001).setKq(0.0001));
         scene2.lights.push_back(light);
@@ -186,7 +186,7 @@ public:
     void sphereSpotSharp() {
         Scene scene1 = Scene("Test scene");
 
-        scene1.geometries.add(std::make_shared<Sphere>(sphere));
+        scene1.geometries.addShared(std::make_shared<Sphere>(sphere));
         std::shared_ptr<SpotLight> light = std::make_shared<SpotLight>(
                 SpotLight(spPL, Vector(1, 1, -0.5), spCL).setNarrowBeam(10).setKl(0.001).setKq(0.00004));
         scene1.lights.push_back(light);
@@ -205,8 +205,8 @@ public:
     void trianglesSpotSharp() {
         Scene scene2 = Scene("Test scene") //
                 .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle1));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle2));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle1));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle2));
         std::shared_ptr<SpotLight> light = std::make_shared<SpotLight>(
                 SpotLight(trPL, trDL, trCL).setNarrowBeam(10).setKl(0.001).setKq(0.00004));
         scene2.lights.push_back(light);
@@ -225,7 +225,7 @@ public:
     void sphereMultipleLights() {
         Scene scene1 = Scene("Test scene");
 
-        scene1.geometries.add(std::make_shared<Sphere>(sphere));
+        scene1.geometries.addShared(std::make_shared<Sphere>(sphere));
         std::shared_ptr<DirectionalLight> light = std::make_shared<DirectionalLight>(
                 DirectionalLight(Vector(1, 1, -0.5), Color::red().scale(2)));
         scene1.lights.push_back(light);
@@ -252,8 +252,8 @@ public:
     void trianglesMultipleLights() {
         Scene scene2 = Scene("Test scene") //
                 .setAmbientLight(AmbientLight(Color::white(), Point(0.15)));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle1));
-        scene2.geometries.add(std::make_shared<Triangle>(triangle2));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle1));
+        scene2.geometries.addShared(std::make_shared<Triangle>(triangle2));
         std::shared_ptr<PointLight> light = std::make_shared<PointLight>(
                 PointLight(trPL, purple).setKl(0.001).setKq(0.0002));
         scene2.lights.push_back(light);

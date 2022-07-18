@@ -27,7 +27,7 @@ Scene Scene::setAmbientLight(AmbientLight light) {
 }
 
 Scene Scene::addGeometry(const std::shared_ptr<Geometry>& geometry) {
-    this->geometries.add(geometry);
+    this->geometries.addShared(geometry);
     return *this;
 }
 
