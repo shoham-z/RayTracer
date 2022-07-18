@@ -19,6 +19,12 @@ add_executable(RayTracer main.cpp
         geometries/Geometries.cpp
         geometries/Intersectable.cpp
         geometries/Tube.cpp
+        geometries/Polygon.cpp
+        complexShapes/Box.cpp
+        complexShapes/Cube.cpp
+        complexShapes/Pyramid.cpp
+        complexShapes/House.cpp
+        complexShapes/StreetLamp.cpp
         renderer/Camera.cpp
         renderer/RayTracer.cpp
         renderer/Scene.cpp
@@ -29,7 +35,6 @@ add_executable(RayTracer main.cpp
         lights/SpotLight.cpp
         lights/DirectionalLight.cpp
         lights/PointLight.cpp
-        Tests/CameraTests.cpp
         Tests/sphereTests.cpp)
 
 target_include_directories(RayTracer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

@@ -34,6 +34,10 @@ Geometries::Geometries() {
 
 }
 
-void Geometries::add(const std::shared_ptr<Geometry>& newGeometry) {
+void Geometries::addShared(const std::shared_ptr<Geometry>& newGeometry) {
     this->geometries.push_back(newGeometry);
+}
+
+void Geometries::add(const Geometries &otherGeometries) {
+    this->geometries.insert(this->geometries.end(), otherGeometries.geometries.begin(), otherGeometries.geometries.end());
 }
