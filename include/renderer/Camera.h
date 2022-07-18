@@ -20,6 +20,7 @@ class Camera {
     int vpHeight;
     int vpWidth;
     double distanceFromVp;
+    double size = 1;
     ImageWriter imageWriter = ImageWriter("", 0, 0);
     RayTracer rayTracer = RayTracer(Scene(""));
 
@@ -39,8 +40,11 @@ public:
     Camera setRayTracer(RayTracer rayTracer);
     Camera setVPSize(int height, int width);
     Camera setVPDistance(double distance);
+    Camera setAntiAliasing(int amount);
 
-    Ray constructRay(int nX, int nY, int j, int i);
+    std::list<Ray> constructRay(int nX, int nY, int j, int i);
+    std::list<Ray> constructRaysThroughGrid(double height, double width, Point source, Point gridCenter, Vector vUp,
+                                                    Vector vRight) const;
     Camera renderImage();
     Camera printGrid(int interval, Color color);
     Camera writeToImage();

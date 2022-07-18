@@ -10,6 +10,7 @@
 #include "geometries/Geometries.h"
 #include "lights/AmbientLight.h"
 #include "lights/LightSource.h"
+#include "copmlexShapes/StreetLamp.h"
 
 class Scene {
 public:
@@ -33,6 +34,10 @@ public:
 
     Scene setBackground(Color background);
 
+    void addStreetLamp(const StreetLamp& streetLamp){
+        this->geometries.add(streetLamp.geometries);
+        this->lights.push_back(std::make_shared<PointLight>(streetLamp.light));
+    }
 };
 
 #endif //RAYTRACER_SCENE_H

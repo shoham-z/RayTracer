@@ -32,25 +32,66 @@ Camera Camera::setVPDistance(double distance) {
     return *this;
 }
 
-Ray Camera::constructRay(int nX, int nY, int j, int i) {
+Camera Camera::setAntiAliasing(int amount) {
+    this->size = amount;
+    return *this;
+}
+
+std::list<Ray> Camera::constructRay(int nX, int nY, int j, int i) {
     Point pIJ = this->position.add(this->vTo.scale(this->distanceFromVp));
-    double xJ = (j - ((nX - 1) / (double) 2)) * ((double) this->vpWidth / nX);
-    double yI = (((nY - 1) / (double) 2) - i) * ((double) this->vpHeight / nY);
+    double sizeOfX = (double) this->vpWidth / nX;
+    double sizeOfY = (double) this->vpHeight / nY;
+
+    double xJ = (j - ((nX - 1) / (double) 2)) * sizeOfX;
+    double yI = (((nY - 1) / (double) 2) - i) * sizeOfY;
     if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
     if (yI != 0) pIJ = pIJ.add(vUp.scale(yI));
-    return {this->position, pIJ.subtract(this->position)};
+
+    return this->constructRaysThroughGrid(sizeOfY, sizeOfX, this->position, pIJ, this->vUp, this->vRight);
+}
+
+std::list<Ray> Camera::constructRaysThroughGrid(double height, double width, Point source, Point gridCenter, Vector vUp,
+                                                Vector vRight) const {
+    std::list<Ray> rays;
+    double xJ;
+    double yI = height / (2 * this->size) - (height / 2);
+    Point destination;
+    for (int i = 0; i < this->size; i++) {
+        xJ = width / (2 * this->size) - (width / 2);
+        for (int j = 0; j < this->size; j++) {
+            destination = gridCenter;
+            if (xJ != 0) destination = destination.add(vRight.scale(xJ));
+            if (yI != 0) destination = destination.add(vUp.scale(yI));
+            rays.emplace_back(Ray(source, destination.subtract(source)));
+            xJ = (xJ + width / this->size);
+            if (xJ > (width / 2))
+                xJ = -width / (2 * this->size);
+        }
+        yI = yI + height / this->size;
+        if (yI > (height / 2))
+            yI = -height / (2 * this->size);
+    }
+    return rays;
 }
 
 Camera Camera::renderImage() {
     if (this->vpHeight <= 0 || this->vpWidth <= 0 || this->distanceFromVp <= 0) {
         exit(-1);
     }
+    double level = 0;
     int yPixels = this->imageWriter.getHeight();
     int xPixels = this->imageWriter.getWidth();
     for (int i = 0; i < xPixels; i++) {
         for (int j = 0; j < yPixels; j++)
-            this->imageWriter.writePixel(i, j, this->rayTracer.traceRay(
-                    this->constructRay(xPixels, yPixels, j, i)));
+        {
+            if(j % 100 == 0) std::cout<< level * 100 / (double)(yPixels*xPixels) << "%" <<std::endl;
+            std::list<Ray> rays = this->constructRay(xPixels, yPixels, j, i);
+            for(Ray ray : rays){
+                this->imageWriter.writePixel(i, j, this->rayTracer.traceRay(ray));
+            }
+            level++;
+        }
+
     }
     return *this;
 }
