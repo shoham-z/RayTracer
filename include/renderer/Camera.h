@@ -11,20 +11,26 @@
 #ifndef RAYTRACER_CAMERA_H
 #define RAYTRACER_CAMERA_H
 
+class Camera;
+namespace pixel{
+    void colorPixel(Camera *camera, int start, int end, int width, int height);
+}
 
 class Camera {
     Point position;
     Vector vTo;
     Vector vUp;
     Vector vRight;
-    int vpHeight;
-    int vpWidth;
-    double distanceFromVp;
+    int vpHeight = 0;
+    int vpWidth = 0;
+    double distanceFromVp = 0;
     double size = 1;
+    int threads = 1;
+public:
+    int progress = 0;
     ImageWriter imageWriter = ImageWriter("", 0, 0);
     RayTracer rayTracer = RayTracer(Scene(""));
 
-public:
     Camera(Point position, Vector to, Vector up);
 
     Point getPosition();
@@ -41,9 +47,10 @@ public:
     Camera setVPSize(int height, int width);
     Camera setVPDistance(double distance);
     Camera setAntiAliasing(int amount);
+    Camera setThreads(int t);
 
-    std::list<Ray> constructRay(int nX, int nY, int j, int i);
-    std::list<Ray> constructRaysThroughGrid(double height, double width, Point source, Point gridCenter, Vector vUp,
+    [[nodiscard]] std::list<Ray> constructRay(int nX, int nY, int j, int i) const;
+    [[nodiscard]] std::list<Ray> constructRaysThroughGrid(double height, double width, Point source, Point gridCenter, Vector vUp,
                                                     Vector vRight) const;
     Camera renderImage();
     Camera printGrid(int interval, Color color);

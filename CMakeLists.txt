@@ -19,7 +19,9 @@ add_executable(RayTracer main.cpp
         geometries/Geometries.cpp
         geometries/Intersectable.cpp
         geometries/Tube.cpp
+        geometries/Cylinder.cpp
         geometries/Polygon.cpp
+        geometries/Ellipsoid.cpp
         complexShapes/Box.cpp
         complexShapes/Cube.cpp
         complexShapes/Pyramid.cpp

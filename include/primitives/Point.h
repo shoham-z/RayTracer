@@ -8,8 +8,8 @@
 #define RAYTRACER_POINT_H
 
 class Point {
-    double x, y, z;
 public:
+    double x, y, z;
     Point();
 
     static Point ZERO() { return {0, 0, 0}; };

@@ -12,7 +12,7 @@ House::House(Point baseBottom, double height, Vector up, Vector right) {
     up = up.normalize();
 
 
-    Point frontBottomCenter = baseBottom.add(to.scale(height / 2)).add(to.scale(0.000001));
+    Point frontBottomCenter = baseBottom.add(to.scale(height / 2)).add(to.scale(height/100));
 
     double doorWidth = height * 3 / 10;
     double doorHeight = height * 3 / 5;

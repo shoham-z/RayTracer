@@ -4,13 +4,16 @@
 
 #include "renderer/Camera.h"
 
+#include <utility>
+#include <thread>
+
 Camera Camera::setImageWriter(ImageWriter imageWriter1) {
-    this->imageWriter = imageWriter1;
+    this->imageWriter = std::move(imageWriter1);
     return *this;
 }
 
 Camera Camera::setRayTracer(RayTracer raytracer) {
-    this->rayTracer = raytracer;
+    this->rayTracer = std::move(raytracer);
     return *this;
 }
 
@@ -37,7 +40,7 @@ Camera Camera::setAntiAliasing(int amount) {
     return *this;
 }
 
-std::list<Ray> Camera::constructRay(int nX, int nY, int j, int i) {
+std::list<Ray> Camera::constructRay(int nX, int nY, int j, int i) const {
     Point pIJ = this->position.add(this->vTo.scale(this->distanceFromVp));
     double sizeOfX = (double) this->vpWidth / nX;
     double sizeOfY = (double) this->vpHeight / nY;
@@ -78,22 +81,34 @@ Camera Camera::renderImage() {
     if (this->vpHeight <= 0 || this->vpWidth <= 0 || this->distanceFromVp <= 0) {
         exit(-1);
     }
-    double level = 0;
     int yPixels = this->imageWriter.getHeight();
     int xPixels = this->imageWriter.getWidth();
-    for (int i = 0; i < xPixels; i++) {
-        for (int j = 0; j < yPixels; j++)
-        {
-            if(j % 100 == 0) std::cout<< level * 100 / (double)(yPixels*xPixels) << "%" <<std::endl;
-            std::list<Ray> rays = this->constructRay(xPixels, yPixels, j, i);
-            for(Ray ray : rays){
-                this->imageWriter.writePixel(i, j, this->rayTracer.traceRay(ray));
-            }
-            level++;
-        }
+    std::vector<std::thread> threads;
+
+    for (int i = 0; i < this->threads; i++) {
+            threads.emplace_back(pixel::colorPixel, this, i* (yPixels/this->threads),(i+1)* (yPixels/this->threads) , xPixels, yPixels);
 
     }
+    for (auto & thread : threads)
+        thread.join();
+
+
     return *this;
+}
+
+void pixel::colorPixel(Camera *camera, int start, int end, int width, int height) {
+
+    for (int i = start; i < end; i++) {
+        for (int j = 0; j < width; j++) {
+            camera->progress++;
+            if(camera->progress % 500 == 0) {std::cout<< camera->progress * 100 / (double)(width*height) << "%" << std::endl; camera->writeToImage();}
+            std::list<Ray> rays = camera->constructRay( width, height, j, i);
+            for (Ray ray: rays) {
+                camera->imageWriter.writePixel(i, j,  camera->rayTracer.traceRay(ray));
+            }
+        }
+    }
+
 }
 
 Point Camera::getPosition() {
@@ -135,5 +150,10 @@ Camera Camera::printGrid(int interval, Color color) {
 
 Camera Camera::writeToImage() {
     this->imageWriter.writeToImage();
+    return *this;
+}
+
+Camera Camera::setThreads(int t) {
+    this->threads = t;
     return *this;
 }

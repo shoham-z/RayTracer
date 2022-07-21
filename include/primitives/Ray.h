@@ -13,11 +13,11 @@
 class GeoPoint;
 
 class Ray {
-    Point start;
-    Vector dir;
 
     const double DELTA = 0.1;
 public:
+    Point start;
+    Vector dir;
     Ray(Point start, Vector dir);
 
     Ray(Point head, Vector direction, Vector normal);

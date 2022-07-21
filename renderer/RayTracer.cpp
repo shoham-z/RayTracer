@@ -12,7 +12,7 @@ RayTracer::RayTracer(Scene scene) : scene(std::move(scene)) {
 
 Color RayTracer::traceRay(Ray ray) {
     GeoPoint closestPoint = findClosestIntersection(ray);
-    return (!closestPoint) ? this->scene.background : calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K).add(this->scene.ambientLight.getColor());
+    return (!closestPoint) ? this->scene.background : calcColor(closestPoint, ray, depth, INITIAL_K).add(this->scene.ambientLight.getColor());
 
 }
 
@@ -92,5 +92,10 @@ GeoPoint RayTracer::findClosestIntersection(Ray ray) {
 Color RayTracer::calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
     GeoPoint gp = findClosestIntersection(ray);
     return (!gp ? this->scene.background : calcColor(gp, ray, level - 1, kkx)).scale(kx);
+}
+
+RayTracer RayTracer::setDepth(int d) {
+    this->depth = d;
+    return *this;
 }
 
