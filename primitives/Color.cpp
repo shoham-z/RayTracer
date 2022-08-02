@@ -5,10 +5,18 @@
 #include "primitives/Color.h"
 
 Color::Color(double r, double g, double b) {
-    if (r < 0 || g < 0 || b < 0) { exit(-1); }
     this->r = r;
     this->g = g;
     this->b = b;
+    if (r < 0) {
+        this->r *= -1;
+    }
+    if (g < 0) {
+        this->g *= -1;
+    }
+    if (b < 0) {
+        this->b *= -1;
+    }
 }
 
 Color Color::scale(double k) {

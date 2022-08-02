@@ -85,28 +85,25 @@ void street() {
 
 void ellipseTest(){
     Camera camera = Camera(Point(0, 0, -1000), Vector(0, 0, 1), Vector(0, 1, 0))
-            .setVPSize(160, 160) // 16x9 scaled by 20
+            .setVPSize(160, 160)
             .setVPDistance(1000);
 
-    Scene scene = Scene("ellipse");//.setBackground(Color(135, 206, 235));
-    //.setAmbientLight(AmbientLight(Color(249,215,28),Double3(0.5)))
+    Scene scene = Scene("ellipse").setBackground(Color(135, 206, 235));
 
     scene.addGeometry(
-            std::make_shared<Ellipsoid>(Ellipsoid(Point(0,0,0), 50,30, 10)
+            std::make_shared<Ellipsoid>(Ellipsoid(Point(0,0,0), 50,50, 5)
                                            .setMaterial(Material().setDiffusive(0.5).setSpecular(0.5).setShininess(
                                                    20).setTransparent(0))
                                            .setEmission(Color::blue().reduce(2))));
 
 
-    scene.addLight(std::make_shared<SpotLight>(SpotLight(Point(0, 100, -100), Vector(0, -1, 1), Color(255, 0, 255))
-                                                       .setNarrowBeam(10).setKl(0.00001).setKq(0.00001)));
-    //scene.addLight(std::make_shared<SpotLight>(SpotLight(Point(-100, -100, 0), Vector(1, 1, 1),Color::red().add(Color::blue()))
-    //                                                   .setNarrowBeam(10).setKl(0.00001).setKq(0.00001)));
+    scene.addLight(std::make_shared<PointLight>(PointLight(Point(0, 50, -50), Color(255, 0, 255))
+                                                       .setKl(0.00001).setKq(0.00001)));
+
 
     ImageWriter imageWriter = ImageWriter("Ellipse", 500, 500);
     camera.setImageWriter(imageWriter) //
-
-            .setRayTracer(RayTracer(scene)) //
+            .setRayTracer(RayTracer(scene).setDepth(1)) //
             .renderImage() //
             .writeToImage(); //
 
@@ -176,14 +173,14 @@ int main() {
 
     //street();
     //street2();
-    ellipseTest();
+    //ellipseTest();
     //gridTest();
     //basicRenderTest();
     //basicRenderMultiColorTest();
-    //LightsTests();
-    //reflectionTransparencyTests::trianglesTransparentSphere();
-    //reflectionTransparencyTests::twoSpheres();
-    //reflectionTransparencyTests::twoSpheresOnMirrors();
+    LightsTests();
+    reflectionTransparencyTests::trianglesTransparentSphere();
+    reflectionTransparencyTests::twoSpheres();
+    reflectionTransparencyTests::twoSpheresOnMirrors();
 
     //clock_t end = clock();
     //std::cout << end - start << std::endl;
