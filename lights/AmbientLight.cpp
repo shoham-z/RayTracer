@@ -4,7 +4,7 @@
 
 #include "lights/AmbientLight.h"
 
-AmbientLight::AmbientLight(Color iA, Point kA) : Light(iA.scale(kA)) {
+AmbientLight::AmbientLight(Color iA, Point kA) : Light(iA.scale(kA.x)) {
 }
 
 AmbientLight::AmbientLight() : Light() {

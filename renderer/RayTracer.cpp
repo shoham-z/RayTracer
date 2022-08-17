@@ -33,9 +33,9 @@ Color RayTracer::calcColor(GeoPoint geoPoint, Ray ray, int level, double k) {
 
             // transparency check
             double lightDistance = lightSource->getDistance(geoPoint.point);
-            Ray refractedRay = {geoPoint.point, lightDirection, n};
+            Ray reflectedRay = {geoPoint.point, lightDirection, n};
             std::list<GeoPoint> intersections = this->scene.geometries
-                    .findGeoIntersections(refractedRay, lightDistance);
+                    .findGeoIntersections(reflectedRay, lightDistance);
             if (intersections.empty()) {ktr =  1;}
 
             if (ktr ==-1) {
@@ -92,10 +92,5 @@ GeoPoint RayTracer::findClosestIntersection(Ray ray) {
 Color RayTracer::calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
     GeoPoint gp = findClosestIntersection(ray);
     return (!gp ? this->scene.background : calcColor(gp, ray, level - 1, kkx)).scale(kx);
-}
-
-RayTracer RayTracer::setDepth(int d) {
-    this->depth = d;
-    return *this;
 }
 

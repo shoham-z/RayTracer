@@ -21,9 +21,9 @@ class ImageWriter {
 public:
     ImageWriter(std::string imageName, int nX, int nY);
 
-    int getHeight();
+    int getHeight() const;
 
-    int getWidth();
+    int getWidth() const;
 
     void writeToImage();
 

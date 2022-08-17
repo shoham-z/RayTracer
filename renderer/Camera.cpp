@@ -3,7 +3,6 @@
 //
 
 #include "renderer/Camera.h"
-
 #include <utility>
 #include <thread>
 
@@ -35,12 +34,12 @@ Camera Camera::setVPDistance(double distance) {
     return *this;
 }
 
-Camera Camera::setAntiAliasing(int amount) {
+Camera Camera::setAntiAliasing(uint amount) {
     this->size = amount;
     return *this;
 }
 
-std::list<Ray> Camera::constructRay(int nX, int nY, int j, int i) const {
+std::list<Ray> Camera::constructRay(int nX, int nY, int j, int i, uint length) const {
     Point pIJ = this->position.add(this->vTo.scale(this->distanceFromVp));
     double sizeOfX = (double) this->vpWidth / nX;
     double sizeOfY = (double) this->vpHeight / nY;
@@ -50,29 +49,29 @@ std::list<Ray> Camera::constructRay(int nX, int nY, int j, int i) const {
     if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
     if (yI != 0) pIJ = pIJ.add(vUp.scale(yI));
 
-    return this->constructRaysThroughGrid(sizeOfY, sizeOfX, this->position, pIJ, this->vUp, this->vRight);
+    return this->constructRaysThroughGrid(sizeOfY, sizeOfX, this->position, pIJ, this->vUp, this->vRight,length);
 }
 
 std::list<Ray> Camera::constructRaysThroughGrid(double height, double width, Point source, Point gridCenter, Vector vUp,
-                                                Vector vRight) const {
+                                                Vector vRight, uint length) const {
     std::list<Ray> rays;
     double xJ;
-    double yI = height / (2 * this->size) - (height / 2);
+    double yI = height / (2 * length) - (height / 2);
     Point destination;
-    for (int i = 0; i < this->size; i++) {
-        xJ = width / (2 * this->size) - (width / 2);
-        for (int j = 0; j < this->size; j++) {
+    for (int i = 0; i < length; i++) {
+        xJ = width / (2 * length) - (width / 2);
+        for (int j = 0; j < length; j++) {
             destination = gridCenter;
             if (xJ != 0) destination = destination.add(vRight.scale(xJ));
             if (yI != 0) destination = destination.add(vUp.scale(yI));
             rays.emplace_back(Ray(source, destination.subtract(source)));
-            xJ = (xJ + width / this->size);
+            xJ = (xJ + width / length);
             if (xJ > (width / 2))
-                xJ = -width / (2 * this->size);
+                xJ = -width / (2 * length);
         }
-        yI = yI + height / this->size;
+        yI = yI + height / length;
         if (yI > (height / 2))
-            yI = -height / (2 * this->size);
+            yI = -height / (2 * length);
     }
     return rays;
 }
@@ -97,14 +96,36 @@ Camera Camera::renderImage() {
 }
 
 void pixel::colorPixel(Camera *camera, int start, int end, int width, int height) {
-
     for (int i = start; i < end; i++) {
         for (int j = 0; j < width; j++) {
             camera->progress++;
-            if(camera->progress % 500 == 0) {std::cout<< camera->progress * 100 / (double)(width*height) << "%" << std::endl; camera->writeToImage();}
-            std::list<Ray> rays = camera->constructRay( width, height, j, i);
-            for (Ray ray: rays) {
-                camera->imageWriter.writePixel(i, j,  camera->rayTracer.traceRay(ray));
+            if (camera->progress % 500 == 0) {
+                std::cout << camera->progress * 100 / (double) (width * height) << "%" << std::endl;
+                camera->writeToImage();
+            }
+
+            Color color{};
+            if (camera->size==1) {
+                camera->imageWriter.writePixel(i, j, camera->rayTracer.traceRay(camera->constructRay(width, height, j, i, 1).front()));
+            }
+            else {
+                for (int AASize = 2; AASize <= camera->size; ++AASize) {
+
+                    auto *colors = new Color[AASize * AASize];
+
+                    std::list<Ray> rays = camera->constructRay(width, height, j, i, AASize);
+                    uint index = 0;
+                    for (Ray ray: rays) {
+                        colors[index] = camera->rayTracer.traceRay(ray);
+                        index++;
+                    }
+                    std::cout<< AASize*AASize<< ", " << index <<std::endl;
+                    if (Color::equal(colors, AASize*AASize) || AASize==camera->size) {
+                        color = Color::average(colors, AASize*AASize);
+                        break;
+                    }
+                }
+                camera->imageWriter.writePixel(i, j, color);
             }
         }
     }
@@ -127,15 +148,15 @@ Vector Camera::getvRight() {
     return this->vRight;
 }
 
-int Camera::getVpHeight() {
+int Camera::getVpHeight() const {
     return this->vpHeight;
 }
 
-int Camera::getVpWidth() {
+int Camera::getVpWidth() const {
     return this->vpWidth;
 }
 
-double Camera::getDistanceFromVp() {
+double Camera::getDistanceFromVp() const {
     return this->distanceFromVp;
 }
 

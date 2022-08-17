@@ -11,10 +11,8 @@
 
 
 class Geometries : public Intersectable {
-    std::list<std::shared_ptr<Geometry>> geometries;
-
-
 public:
+    std::list<std::shared_ptr<Geometry>> geometries;
 
     void add(std::list<std::shared_ptr<Geometry>> newGeometries);
 

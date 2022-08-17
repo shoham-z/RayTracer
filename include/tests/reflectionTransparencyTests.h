@@ -27,7 +27,7 @@ public:
                                                                             Material().setDiffusive(0.5).setSpecular(
                                                                                     0.5).setShininess(100))));
         scene.lights.push_back(std::make_shared<SpotLight>(
-                SpotLight(Point(-100, -100, 500), Vector(-1, -1, -2), Color(1000, 600, 0)) //
+                SpotLight(Point(-100, -100, 500), Vector(-1, -1, -2), Color(1, .6, 0)) //
                         .setKl(0.0004).setKq(0.0000006)));
 
         camera.setImageWriter(ImageWriter("refractionTwoSpheres", 500, 500)) //
@@ -45,10 +45,10 @@ public:
         Camera camera = Camera(Point(0, 0, 10000), Vector(0, 0, -1), Vector(0, 1, 0)) //
                 .setVPSize(2500, 2500).setVPDistance(10000); //
 
-        scene.setAmbientLight(AmbientLight(Color(255, 255, 255), Point(0.1)));
+        scene.setAmbientLight(AmbientLight(Color::white(), Point(0.1)));
 
         scene.geometries.addShared(std::make_shared<Sphere>(
-                Sphere(Point(-950, -900, -1000), 400).setEmission(Color(0, 0, 100)) //
+                Sphere(Point(-950, -900, -1000), 400).setEmission(Color(0, 0, 1)) //
                         .setMaterial(
                                 Material().setDiffusive(0.25).setSpecular(0.25).setShininess(20).setTransparent(0.5))));
         scene.geometries.addShared(

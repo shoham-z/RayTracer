@@ -20,7 +20,12 @@ Pyramid::Pyramid(Point bottomCenter, double height, double width, Vector vTo, Ve
     Triangle back = Triangle(leftBack, rightBack, top).setEmission(color).setMaterial(material);
     Triangle right = Triangle(rightBack, rightFront, top).setEmission(color).setMaterial(material);
     Triangle left = Triangle(leftFront, leftBack, top).setEmission(color).setMaterial(material);
-    Polygon bottom = Polygon(leftBack, leftFront, rightFront, rightBack).setEmission(color).setMaterial(material);
+    std::vector<Point> edges;
+    edges.emplace_back(leftBack);
+    edges.emplace_back(leftFront);
+    edges.emplace_back(rightBack);
+    edges.emplace_back(rightFront);
+    Polygon bottom = Polygon(edges).setEmission(color).setMaterial(material);
 
     this->pyramid.addShared(std::make_shared<Triangle>(front));
     this->pyramid.addShared(std::make_shared<Triangle>(back));

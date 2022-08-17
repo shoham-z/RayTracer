@@ -13,7 +13,7 @@
 
 class Geometry: public Intersectable {
     protected:
-    Color emission;
+    Color emission = Color::blue();
     Material material = Material();
 public:
     virtual Vector getNormal(Point point) = 0;

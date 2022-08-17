@@ -14,7 +14,13 @@ Polygon Box::constructRectangle(Point center, Vector vRight, Vector vUp, double 
     Point frontTopLeft = frontTopCenter.add(vRight.scale(-stepSide));
     Point frontBottomRight = frontBottomCenter.add(vRight.scale(stepSide));
     Point frontBottomLeft = frontBottomCenter.add(vRight.scale(-stepSide));
-    return {frontTopRight, frontTopLeft, frontBottomLeft, frontBottomRight};
+    std::vector<Point> edges;
+    edges.emplace_back(frontTopRight);
+    edges.emplace_back(frontTopLeft);
+    edges.emplace_back(frontBottomLeft);
+    edges.emplace_back(frontBottomRight);
+
+    return {edges};
 
 }
 

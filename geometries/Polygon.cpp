@@ -3,6 +3,8 @@
 //
 
 #include "geometries/Polygon.h"
+
+#include <utility>
 #include "primitives/Vector.h"
 #include "geometries/GeoPoint.h"
 #include "geometries/Plane.h"
@@ -15,28 +17,25 @@ std::list<GeoPoint> Polygon::findGeoIntersectionsHelper(Ray ray, double maxDista
     Plane plane = Plane(this->edges[0], this->edges[1], this->edges[2]);
     Point p = plane.findGeoIntersectionsHelper(ray, maxDistance).front().point;
     std::list<GeoPoint> intersections;
-    Vector n1 = this->edges[1].subtract(this->edges[0])
-            .crossProduct(this->edges[0].subtract(p));
-    Vector n2 = this->edges[2].subtract(this->edges[1])
-            .crossProduct(this->edges[1].subtract(p));
-    if (n1.dotProduct(n2)<=0) return intersections;
-
-    Vector n3 = this->edges[3].subtract(this->edges[2])
-            .crossProduct(this->edges[2].subtract(p));
-    if (n1.dotProduct(n3)<=0) return intersections;
-
-    Vector n4 = this->edges[0].subtract(this->edges[3])
-            .crossProduct(this->edges[3].subtract(p));
-    if (n1.dotProduct(n4)<=0) return intersections;
+    Vector n = Vector::ZERO();
+    for (int i = 1; i <= this->edges.size(); ++i) {
+        Vector t = this->edges[i%edges.size()].subtract(this->edges[i-1])
+                .crossProduct(this->edges[i-1].subtract(p));
+        if(n.isZero()) n = t;
+        else if (n.dotProduct(t)<=0)
+            return intersections;
+    }
     intersections.emplace_back(this, p);
     return intersections;
 }
 
-Polygon::Polygon(Point p1, Point p2, Point p3, Point p4) {
-    this->edges[0] = p1;
-    this->edges[1] = p2;
-    this->edges[2] = p3;
-    this->edges[3] = p4;
+Polygon::Polygon(std::vector<Point> points) {
+    if (points.size()<3){
+        std::cout<<"Invalid Polygon Vertices!"<<std::endl;
+        exit(-1);
+    }
+    this->edges = std::move(points);
+    this->emission=Color::red();
 }
 
 Polygon Polygon::setMaterial(Material material) {

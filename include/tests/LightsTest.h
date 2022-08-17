@@ -35,8 +35,8 @@ public:
             Point(-75, 78, 100)}; // the left-top
     Point trPL = Point(30, 10, -100); // Triangles test Position of Light
     Point spPL = Point(-50, -50, 25); // Sphere test Position of Light
-    Color trCL = Color(800, 500, 250); // Triangles test Color of Light
-    Color spCL = Color(800, 500, 0); // Sphere test Color of Light
+    Color trCL = Color(3.13725490196,  1.96078431373, .98039215686); // Triangles test Color of Light
+    Color spCL = Color(3.13725490196, 1.96078431373, 0); // Sphere test Color of Light
     Vector trDL = Vector(-2, -2, -2); // Triangles test Direction of Light
     Material material = Material().setDiffusive(0.5).setSpecular(0.5).setShininess(300);
     Triangle triangle1 = Triangle(p[0], p[1], p[2]);
@@ -44,6 +44,35 @@ public:
     Sphere sphere = Sphere(Point(0, 0, -50), 50);
 
     Color purple = Color::blue().add(Color::red());
+
+    static void shadowTest() {
+        Scene scene =Scene("Test scene");
+        scene.setAmbientLight(AmbientLight(Color::white(),Point(0.15)));
+
+        scene.addGeometry(std::make_shared<Triangle>(
+        Triangle(Point(-150, -150, -115),Point(150, -150, -135),Point(75, 75, -150))
+                .setMaterial(Material().setSpecular(0.8).setShininess(60))));
+        scene.addGeometry(std::make_shared<Triangle>(
+                Triangle(Point(-150, -150, -115),Point(-70, 70, -140),Point(75, 75, -150))
+            .setMaterial(Material().setSpecular(0.8).setShininess(60))));
+
+        scene.addGeometry(std::make_shared<Sphere>(
+        Sphere(Point(0, 0, -11), 30)
+                .setEmission(Color::blue())
+                .setMaterial(Material().setDiffusive(0.5).setSpecular(0.5).setShininess(30))));
+
+        scene.addLight(std::make_shared<SpotLight>(
+                SpotLight(Point(40, 40, 115),Vector(-1, -1, -4),
+                          Color(2.74509803922, 1.56862745098, 1.56862745098))
+                .setKl(4E-4).setKq(2E-5)));
+
+        Camera camera = Camera(Point(0, 0, 1000), Vector(0, 0, -1), Vector(0, 1, 0))
+                .setVPSize(200, 200).setVPDistance(1000)
+                .setRayTracer(RayTracer(scene))
+                .setImageWriter(ImageWriter("shadowTrianglesSphere", 600, 600))
+                .renderImage()
+                .writeToImage();
+    }
 
     LightsTests() {
         this->triangle1.setMaterial(material);
@@ -73,9 +102,10 @@ public:
                 DirectionalLight(Vector(1, 1, -0.5), spCL));
         scene1.lights.push_back(light);
 
-        ImageWriter imageWriter = ImageWriter("lightSphereDirectional", 500, 500);
+        ImageWriter imageWriter = ImageWriter("lightSphereDirectionalAA", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene1)) //
+                .setAntiAliasing(8)
                 .renderImage() //
                 .writeToImage(); //
     }
@@ -271,32 +301,6 @@ public:
                 .renderImage() //
                 .writeToImage(); //
     }
-
-    /**
-     * Tests method for {@link lighting.LightSource#getDistance(Point)}
-     */
-
-    void testGetDistance() {
-        SpotLight spotLight = SpotLight(spPL, Vector(1, 1, -0.5), spCL);
-        PointLight pointLight = PointLight(trPL, trCL);
-        DirectionalLight directionalLight = DirectionalLight(trDL, trCL);
-
-        // ============== Equivalence Partitions Tests ==================
-        // EP01: Testing spotlight.getDistance
-        //assertEquals(75, spotLight.getDistance(Point::ZERO),
-        //             "EP01: not working");
-
-
-        // EP02: Testing point-light.getDistance
-        //assertEquals(104.880884817, pointLight.getDistance(Point::ZERO), 0.00001,
-        //             "EP02: not working");
-
-        // EP02: Testing directional light.getDistance
-        //assertEquals(std::numeric_limits<double>::max(), directionalLight.getDistance(Point::ZERO),
-        //             "EP02: not working");
-
-    }
-
 };
 
 

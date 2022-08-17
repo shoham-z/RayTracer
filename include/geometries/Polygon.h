@@ -12,9 +12,9 @@
 #include "GeoPoint.h"
 
 class Polygon : public Geometry {
-Point edges[4];
+    std::vector<Point> edges;
 public:
-    Polygon(Point p1,Point p2,Point p3,Point p4);
+    Polygon(std::vector<Point> points);//change this to array and size OR a list
 
     Vector getNormal(Point point) override;
 

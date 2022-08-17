@@ -21,9 +21,8 @@ public:
 
     Color traceRay(Ray ray);
 
-    RayTracer setDepth(int d);
-
 private:
+    Color calcColor(GeoPoint geoPoint, Ray ray);
     Color calcGlobalEffect(Ray ray, int level, double kx, double kkx);
 
     Color calcColor(GeoPoint gp, Ray ray, int level, double k);

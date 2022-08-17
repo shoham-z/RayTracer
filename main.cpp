@@ -7,81 +7,19 @@
 #include "geometries/Polygon.h"
 #include "renderer/Camera.h"
 #include "geometries/Geometries.h"
-#include "lights/DirectionalLight.h"
-#include "lights/SpotLight.h"
 #include "lights/PointLight.h"
 #include "tests/LightsTest.h"
 #include "tests/reflectionTransparencyTests.h"
-#include "geometries/Tube.h"
 #include "copmlexShapes/House.h"
 #include "copmlexShapes/StreetLamp.h"
-#include "geometries/Cylinder.h"
 #include "geometries/Ellipsoid.h"
+#include "ObjParser.h"
 
 void gridTest();
 
 void basicRenderTest();
 
 void basicRenderMultiColorTest();
-
-
-
-void street() {
-    Camera camera = Camera(Point(2000, 100, 450), Vector(-2, -0.1, -0.5), Vector(-0.1, 2, 0))
-    .setVPSize(200, 200)
-            .setVPDistance(1000);
-
-    int howManyHouses = 400;
-    double houseSize = 30;
-
-    Scene scene = Scene("GroveStreet").setBackground(Color(2, 25, 60));
-
-    // ****geometries start
-
-    // *group House
-    Vector up = Vector(0, 1, 0);
-    Vector to = Vector(-1, 0, 0);
-    Vector right = Vector(0,0,-1);
-
-    Point housesCenter = Point(-30, -50, -140);
-
-    double step = 2;
-    for (int i = 1; i < howManyHouses * step; i += (int)step) {
-        scene.geometries.add(House(housesCenter.add(to.scale(houseSize * i)), houseSize, up, to.scale(-1)).house);
-    }
-    scene.geometries.addShared(std::make_shared<Polygon>(
-            Polygon(housesCenter.add(right.scale(-100)), housesCenter.add(right.scale(-300)),
-                    housesCenter.add(right.scale(-300)).add(to.scale(600)),
-                    housesCenter.add(right.scale(-100)).add(to.scale(600)))
-                    .setEmission(Color::blue())
-                    .setMaterial(Material().setReflective(0.5).setSpecular(0.5))));
-    scene.geometries.addShared(
-            std::make_shared<Sphere>(Sphere(camera.getPosition().add(camera.getvTo().scale(2000)), 80)
-                                             .setEmission(Color::blue())
-                                             .setMaterial(Material().setTransparent(1).setDiffusive(0.4).setSpecular(
-                                                     0.3).setShininess(100))));
-
-
-    scene.geometries.addShared(std::make_shared<Plane>(
-            Plane(Point(0, -50, 0), Vector(0, 1, 0)).setEmission(Color(27, 55, 39).scale(0.85)).setMaterial(
-                    Material().setDiffusive(0.5))));
-    // ****geometries end
-
-    // ****lights start
-    for (int i = 1; i < howManyHouses * step/2; i += step) {
-        scene.addStreetLamp(StreetLamp(Point(100, -50, -70).add(to.scale(houseSize/2)).add(to.scale(4 * houseSize * i)), 50,
-                Color::red().add(Color::green()).scale(0.5), up, 1.25));
-    }
-    // ****lights end
-
-    std::cout << "rendering..." << std::endl;
-    ImageWriter imageWriter = ImageWriter("Mini-project1", 500, 500);
-    camera.setImageWriter(imageWriter)
-            //.setAntiAliasing(1)//
-            .setRayTracer(RayTracer(scene).setDepth(3)) //
-            .renderImage() //
-            .writeToImage(); //
-}
 
 void ellipseTest(){
     Camera camera = Camera(Point(0, 0, -1000), Vector(0, 0, 1), Vector(0, 1, 0))
@@ -103,13 +41,13 @@ void ellipseTest(){
 
     ImageWriter imageWriter = ImageWriter("Ellipse", 500, 500);
     camera.setImageWriter(imageWriter) //
-            .setRayTracer(RayTracer(scene).setDepth(1)) //
+            .setRayTracer(RayTracer(scene)) //
             .renderImage() //
             .writeToImage(); //
 
 }
 
-void street2() {
+void street() {
     Camera camera = Camera(Point(2000, 100, 450), Vector(-2, -0.1, -0.5), Vector(-0.1, 2, 0))
             .setVPSize(200, 200)
             .setVPDistance(1000);
@@ -117,7 +55,7 @@ void street2() {
     int howManyHouses = 9;
     double houseSize = 30;
 
-        Scene scene = Scene("GroveStreet").setBackground(Color(2, 25, 60));
+        Scene scene = Scene("GroveStreet").setBackground(Color(.033, .7778, 1));
     {
         // ****geometries start
 
@@ -132,10 +70,13 @@ void street2() {
         for (int i = 1; i < howManyHouses * step; i += (int) step) {
             scene.geometries.add(House(housesCenter.add(to.scale(houseSize * i)), houseSize, up, to.scale(-1)).house);
         }
+        std::vector<Point> edges;
+        edges.emplace_back(housesCenter.add(right.scale(-100)));
+        edges.emplace_back(housesCenter.add(right.scale(-300)));
+        edges.emplace_back(housesCenter.add(right.scale(-300)).add(to.scale(600)));
+        edges.emplace_back(housesCenter.add(right.scale(-100)).add(to.scale(600)));
         scene.geometries.addShared(std::make_shared<Polygon>(
-                Polygon(housesCenter.add(right.scale(-100)), housesCenter.add(right.scale(-300)),
-                        housesCenter.add(right.scale(-300)).add(to.scale(600)),
-                        housesCenter.add(right.scale(-100)).add(to.scale(600)))
+                Polygon(edges)
                         .setEmission(Color::blue())
                         .setMaterial(Material().setReflective(0.5).setSpecular(0.5))));
         scene.geometries.addShared(
@@ -147,7 +88,7 @@ void street2() {
 
 
         scene.geometries.addShared(std::make_shared<Plane>(
-                Plane(Point(0, -50, 0), Vector(0, 1, 0)).setEmission(Color(27, 55, 39).scale(0.85)).setMaterial(
+                Plane(Point(0, -50, 0), Vector(0, 1, 0)).setEmission(Color(0.4909090909, 1, 0.70909090909).scale(0.85)).setMaterial(
                         Material().setDiffusive(0.5))));
         // ****geometries end
 
@@ -159,31 +100,38 @@ void street2() {
         }
         // ****lights end
     }
-    std::cout << "rendering..." << std::endl;
-    ImageWriter imageWriter = ImageWriter("StreepLamp", 1000,1000);
+    ImageWriter imageWriter = ImageWriter("StreepLamp", 500,500);
     camera.setImageWriter(imageWriter)
-            .setAntiAliasing(1)//
-            .setRayTracer(RayTracer(scene).setDepth(3)) //
+            .setAntiAliasing(4)
+            .setThreads(4)
+            .setRayTracer(RayTracer(scene))
+            .renderImage()
+            .writeToImage();
+}
+
+void objTest(){
+    std::string name = "human";
+    double d = 100;
+    Camera camera = Camera(Point(0, 0, -d), Vector(0, 0, 1), Vector(0, 1, 0))
+            .setVPSize(20, 20)
+            .setVPDistance(d);
+
+    Scene scene = Scene("scene").setGeometries(parse("../ObjModels/" + name +".obj"));
+
+    Point sourceLight = camera.getPosition().add(Vector(0,50,0));
+    scene.addLight(std::make_shared<SpotLight>(SpotLight(sourceLight, Point::ZERO().subtract(sourceLight), Color::blue()).setNarrowBeam(4)));
+
+    camera.setImageWriter(ImageWriter(name, 500, 500)) //
+            .setRayTracer(RayTracer(scene)) //
+            .setThreads(4)
             .renderImage() //
             .writeToImage(); //
 }
 
 int main() {
-    //clock_t start = clock();    double level = 0;
-
+    objTest();
     //street();
-    //street2();
-    //ellipseTest();
-    //gridTest();
-    //basicRenderTest();
-    //basicRenderMultiColorTest();
-    LightsTests();
-    reflectionTransparencyTests::trianglesTransparentSphere();
-    reflectionTransparencyTests::twoSpheres();
-    reflectionTransparencyTests::twoSpheresOnMirrors();
-
-    //clock_t end = clock();
-    //std::cout << end - start << std::endl;
+    //LightsTests::shadowTest();
     return 0;
 }
 
@@ -217,7 +165,7 @@ void basicRenderMultiColorTest() {
     Camera camera = Camera(Point::ZERO(), Vector(0, 0, -1), Vector(0, 1, 0)) //
             .setVPDistance(100) //
             .setVPSize(500, 500) //
-            .setImageWriter(ImageWriter("color render test", 1000, 1000))
+            .setImageWriter(ImageWriter("color render test", 500, 500))
             .setRayTracer(RayTracer(scene));
 
     camera.renderImage();
@@ -247,7 +195,7 @@ void basicRenderTest() {
 
             .setVPDistance(100) //
             .setVPSize(500, 500) //
-            .setImageWriter(ImageWriter("base render test", 1000, 1000))
+            .setImageWriter(ImageWriter("base render test", 500, 500))
             .setRayTracer(RayTracer(scene));
 
     camera.renderImage();

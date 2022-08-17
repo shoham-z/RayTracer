@@ -2,7 +2,7 @@
 // Created by shoham on 7/20/22.
 //
 
-#include "Ellipsoid.h"
+#include "geometries/Ellipsoid.h"
 #include "primitives/Point.h"
 
 Ellipsoid::Ellipsoid(Point p, double radius1, double radius2, double radius3) : center(p) {

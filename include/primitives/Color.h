@@ -8,43 +8,43 @@
 #ifndef RAYTRACER_COLOR_H
 #define RAYTRACER_COLOR_H
 
-
 class Color {
 public:
-    double r, g, b;
+    double_t r, g, b;
 
-    static Color red() { return {255, 0, 0}; }
+    static Color red() { return {1, 0, 0}; }
 
-    static Color green() { return {0, 255, 0}; }
+    static Color green() { return {0, 1, 0}; }
 
-    static Color blue() { return {0, 0, 255}; }
+    static Color blue() { return {0, 0, 1}; }
 
     static Color black() { return {0, 0, 0}; }
 
-    static Color white() { return {255, 255, 255}; }
+    static Color white() { return {1, 1, 1}; }
 
     Color(double r, double g, double b);
     Color();
 
-    Color scale(double k);
+    Color scale(double k) const;
 
-    Color scale(Point k);
+    Color reduce(double k) const;
 
-    Color reduce(double k);
-
-    Color reduce(Point k);
-
-    Color add(const std::list<Color> &colors);
+    Color add(const std::list<Color> &colors) const;
 
     Color add(Color color);
 
-    Color operator=(struct Color *other);
+    Color operator=(Color *other);
+
+    bool operator==(Color other) const;
 
     friend std::ostream &operator<<(std::ostream &os, Color &color);
 
-    int getR();
-    int getG();
-    int getB();
+    double_t getR();
+    double_t getG();
+    double_t getB();
+
+    static bool equal(Color* colors, uint size);
+    static Color average(Color* colors, uint size);
 };
 
 

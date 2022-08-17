@@ -51,6 +51,13 @@ public:
         return getExp(number) < ACCURACY ? 0.0 : number;
     }
 
+    static double pow(double base, int exponent){
+        double a = base;
+        for (int i = 0; i < exponent-1; ++i) {
+            a*=base;
+        }
+        return a;
+    }
 };
 
 
