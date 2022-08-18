@@ -76,8 +76,8 @@ bool Color::operator==(Color other) const {
     return (this->r == other.r && this->b == other.b && this->g == other.g);
 }
 
-bool Color::equal(Color *colors, uint size) {
-    for (int i = 0; i < size - 1; ++i) {
+bool Color::equal(std::vector<Color> colors) {
+    for (int i = 0; i < colors.size() - 1; ++i) {
         if(!(colors[i] == colors[i+1])){
             return false;
         }
@@ -85,14 +85,14 @@ bool Color::equal(Color *colors, uint size) {
     return true;
 }
 
-Color Color::average(Color *colors, uint size) {
+Color Color::average(std::vector<Color> colors) {
     std::list<Color> cs;
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < colors.size(); i++) {
         cs.push_back(colors[i]);
     }
     Color average = colors[0].add(cs);
-    return average.reduce(size);
+    return average.reduce(colors.size());
 }
 
 

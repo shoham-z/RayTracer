@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <list>
+#include <vector>
 #include "Point.h"
 
 #ifndef RAYTRACER_COLOR_H
@@ -43,8 +44,8 @@ public:
     double_t getG();
     double_t getB();
 
-    static bool equal(Color* colors, uint size);
-    static Color average(Color* colors, uint size);
+    static bool equal(std::vector<Color> colors);
+    static Color average(std::vector<Color> colors);
 };
 
 
