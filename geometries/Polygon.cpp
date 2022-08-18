@@ -35,7 +35,6 @@ Polygon::Polygon(std::vector<Point> points) {
         exit(-1);
     }
     this->edges = std::move(points);
-    this->emission=Color::red();
 }
 
 Polygon Polygon::setMaterial(Material material) {
