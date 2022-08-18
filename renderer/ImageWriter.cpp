@@ -23,8 +23,7 @@ int ImageWriter::getWidth() const {
 }
 
 void ImageWriter::writePixel(int xIndex, int yIndex, Color color) {
-    int tmp = xIndex * this->height + yIndex;
-    this->image[tmp] = color;
+    this->image[xIndex * this->height + yIndex] = color;
 }
 
 void ImageWriter::writeToImage() {
