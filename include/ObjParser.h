@@ -62,7 +62,7 @@ Geometries parse(const std::string& fname) {
                         }
                     } else { s = s.substr(1, s.length() - 1); }
                 }
-                //fac.emplace_back(std::stoi(s));
+                fac.emplace_back(std::stoi(s));
                 faces.emplace_back(fac);
             }
         }
@@ -73,12 +73,17 @@ Geometries parse(const std::string& fname) {
         for(auto ver: face.vertices){
             edges.emplace_back(points[ver-1]);
             index++;
-            if (index==face.vertices.size()) mesh.addShared(std::make_shared<Polygon>(
+            if (index==face.vertices.size()){
+                mesh.addShared(std::make_shared<Polygon>(
                     Polygon(edges)
-                    .setMaterial(Material().setDiffusive(0.5).setSpecular(0.5).setShininess(30))
+                    .setMaterial(Material().setDiffusive(0.5).setSpecular(0.5).setReflective(0.5).setShininess(30))
                     .setEmission(Color::green())));
-                    //.setEmission(Color(rand()/double_t(RAND_MAX) + 0.5,rand()/double_t(RAND_MAX) + 0.5,rand()/double_t(RAND_MAX) + 0.5))));
+                    index = 0;
+            }
         }
+    }
+    if(faces.size() != mesh.geometries.size()){
+        std::cout<<"That's what i was thinking"; exit(-1);
     }
     return mesh;
 }
