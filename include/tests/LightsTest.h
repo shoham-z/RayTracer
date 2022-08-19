@@ -69,7 +69,7 @@ public:
         Camera camera = Camera(Point(0, 0, 1000), Vector(0, 0, -1), Vector(0, 1, 0))
                 .setVPSize(200, 200).setVPDistance(1000)
                 .setRayTracer(RayTracer(scene))
-                .setImageWriter(ImageWriter("shadowTrianglesSphere", 600, 600))
+                .setImageWriter(ImageWriter("shadowTrianglesSphere", 500, 500))
                 .renderImage()
                 .writeToImage();
     }
@@ -105,7 +105,7 @@ public:
         ImageWriter imageWriter = ImageWriter("lightSphereDirectionalAA", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene1)) //
-                .setAntiAliasing(8)
+                //.setAntiAliasing(8)
                 .renderImage() //
                 .writeToImage(); //
     }
@@ -182,7 +182,7 @@ public:
                 PointLight(trPL, trCL).setKl(0.001).setKq(0.0002));
         scene2.lights.push_back(light);
 
-        ImageWriter imageWriter = ImageWriter("lightTrianglesPoint", 500, 500);
+        ImageWriter imageWriter = ImageWriter("lightTrianglesPoint", 1, 1);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene2)) //
                 .renderImage() //
