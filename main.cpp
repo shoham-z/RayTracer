@@ -110,16 +110,15 @@ void street() {
 }
 
 void objTest(){
-    std::string name = "human";
-    double d = 100;
+    std::string name = "notebook";
+    double d = 10;
     Camera camera = Camera(Point(0, 0, -d), Vector(0, 0, 1), Vector(0, 1, 0))
-            .setVPSize(20, 20)
+            .setVPSize(5,5)
             .setVPDistance(d);
 
     Scene scene = Scene("scene").setGeometries(parse("../ObjModels/" + name +".obj"));
 
-    Point sourceLight = camera.getPosition().add(Vector(0,50,0));
-    scene.addLight(std::make_shared<SpotLight>(SpotLight(sourceLight, Point::ZERO().subtract(sourceLight), Color::blue()).setNarrowBeam(4)));
+    scene.addLight(std::make_shared<PointLight>(PointLight(camera.getPosition().add(camera.getvTo().scale(camera.getDistanceFromVp()-3)), Color::red())));
 
     camera.setImageWriter(ImageWriter(name, 500, 500)) //
             .setRayTracer(RayTracer(scene)) //
@@ -132,6 +131,7 @@ int main() {
     objTest();
     //street();
     //LightsTests::shadowTest();
+    //LightsTests();
     return 0;
 }
 
@@ -144,9 +144,9 @@ void basicRenderMultiColorTest() {
 
     Sphere sphere = Sphere(Point(0, 0, -100), 50);
     scene.geometries.addShared(std::make_shared<Sphere>(sphere));
-    // up left
 
-    //Pointers are bad idea
+
+    // up left
     Triangle triangle1 = Triangle(Point(-100, 0, -100), Point(0, 100, -100), Point(-100, 100, -100));
     triangle1.setEmission(Color::green());
     scene.geometries.addShared(std::make_shared<Triangle>(triangle1));

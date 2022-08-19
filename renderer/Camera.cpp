@@ -111,17 +111,16 @@ void pixel::colorPixel(Camera *camera, int start, int end, int width, int height
             else {
                 for (int AASize = 2; AASize <= camera->size; ++AASize) {
 
-                    auto *colors = new Color[AASize * AASize];
+                    std::vector<Color> colors;
 
                     std::list<Ray> rays = camera->constructRay(width, height, j, i, AASize);
                     uint index = 0;
                     for (Ray ray: rays) {
-                        colors[index] = camera->rayTracer.traceRay(ray);
+                        colors.emplace_back(camera->rayTracer.traceRay(ray));
                         index++;
                     }
-                    std::cout<< AASize*AASize<< ", " << index <<std::endl;
-                    if (Color::equal(colors, AASize*AASize) || AASize==camera->size) {
-                        color = Color::average(colors, AASize*AASize);
+                    if (Color::equal(colors) || AASize==camera->size) {
+                        color = Color::average(colors);
                         break;
                     }
                 }
