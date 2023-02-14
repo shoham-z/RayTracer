@@ -37,6 +37,6 @@ add_executable(RayTracer main.cpp
         lights/SpotLight.cpp
         lights/DirectionalLight.cpp
         lights/PointLight.cpp
-        Tests/sphereTests.cpp)
+        Tests/sphereTests.cpp renderer/Rasterizer.cpp include/renderer/Rasterizer.h)
 
 target_include_directories(RayTracer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

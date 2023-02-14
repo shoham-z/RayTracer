@@ -32,7 +32,7 @@ public:
 
         camera.setImageWriter(ImageWriter("refractionTwoSpheres", 500, 500)) //
                 .setRayTracer(RayTracer(scene)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage();
     }
 
@@ -73,7 +73,7 @@ public:
         ImageWriter imageWriter = ImageWriter("reflectionTwoSpheresMirrored", 500, 500);
         camera.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage();
     }
 
@@ -107,7 +107,7 @@ public:
         ImageWriter imageWriter = ImageWriter("refractionShadow", 600, 600);
         camera.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage();
     }
 

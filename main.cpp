@@ -42,7 +42,7 @@ void ellipseTest(){
     ImageWriter imageWriter = ImageWriter("Ellipse", 500, 500);
     camera.setImageWriter(imageWriter) //
             .setRayTracer(RayTracer(scene)) //
-            .renderImage() //
+            .raytraceImage() //
             .writeToImage(); //
 
 }
@@ -105,7 +105,7 @@ void street() {
             .setAntiAliasing(4)
             .setThreads(4)
             .setRayTracer(RayTracer(scene))
-            .renderImage()
+            .raytraceImage()
             .writeToImage();
 }
 
@@ -123,7 +123,7 @@ void objTest(){
     camera.setImageWriter(ImageWriter(name, 500, 500)) //
             .setRayTracer(RayTracer(scene)) //
             .setThreads(4)
-            .renderImage() //
+            .raytraceImage() //
             .writeToImage(); //
 }
 
@@ -168,7 +168,7 @@ void basicRenderMultiColorTest() {
             .setImageWriter(ImageWriter("color render test", 500, 500))
             .setRayTracer(RayTracer(scene));
 
-    camera.renderImage();
+    camera.raytraceImage();
     camera.printGrid(100, Color::white());
     camera.writeToImage();
 }
@@ -198,7 +198,7 @@ void basicRenderTest() {
             .setImageWriter(ImageWriter("base render test", 500, 500))
             .setRayTracer(RayTracer(scene));
 
-    camera.renderImage();
+    camera.raytraceImage();
     camera.printGrid(100, Color::blue().add(Color::red()));
     camera.writeToImage();
 }
@@ -214,7 +214,7 @@ void gridTest() {
             .setImageWriter(ImageWriter("grid test", 500,500))
             .setRayTracer(RayTracer(scene));
 
-    camera.renderImage();
+    camera.raytraceImage();
     camera.printGrid(100, Color(255, 255, 0));
     camera.writeToImage();
 }

@@ -3,6 +3,7 @@
 //
 
 #include "renderer/Camera.h"
+#include "geometries/Triangle.h"
 #include <utility>
 #include <thread>
 
@@ -49,7 +50,7 @@ std::list<Ray> Camera::constructRay(int nX, int nY, int j, int i, uint length) c
     if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
     if (yI != 0) pIJ = pIJ.add(vUp.scale(yI));
 
-    return this->constructRaysThroughGrid(sizeOfY, sizeOfX, this->position, pIJ, this->vUp, this->vRight,length);
+    return this->constructRaysThroughGrid(sizeOfY, sizeOfX, this->position, pIJ, this->vUp, this->vRight, length);
 }
 
 std::list<Ray> Camera::constructRaysThroughGrid(double height, double width, Point source, Point gridCenter, Vector vUp,
@@ -76,7 +77,7 @@ std::list<Ray> Camera::constructRaysThroughGrid(double height, double width, Poi
     return rays;
 }
 
-Camera Camera::renderImage() {
+Camera Camera::raytraceImage() {
     if (this->vpHeight <= 0 || this->vpWidth <= 0 || this->distanceFromVp <= 0) {
         exit(-1);
     }
@@ -85,10 +86,11 @@ Camera Camera::renderImage() {
     std::vector<std::thread> threads;
 
     for (int i = 0; i < this->threads; i++) {
-            threads.emplace_back(pixel::colorPixel, this, i* (yPixels/this->threads),(i+1)* (yPixels/this->threads) , xPixels, yPixels);
+        threads.emplace_back(pixel::colorPixel, this, i * (yPixels / this->threads),
+                             (i + 1) * (yPixels / this->threads), xPixels, yPixels);
 
     }
-    for (auto & thread : threads)
+    for (auto &thread: threads)
         thread.join();
 
 
@@ -105,10 +107,10 @@ void pixel::colorPixel(Camera *camera, int start, int end, int width, int height
             }
 
             Color color{};
-            if (camera->size==1) {
-                camera->imageWriter.writePixel(i, j, camera->rayTracer.traceRay(camera->constructRay(width, height, j, i, 1).front()));
-            }
-            else {
+            if (camera->size == 1) {
+                camera->imageWriter.writePixel(i, j, camera->rayTracer.traceRay(
+                        camera->constructRay(width, height, j, i, 1).front()));
+            } else {
                 for (int AASize = 2; AASize <= camera->size; ++AASize) {
 
                     std::vector<Color> colors;
@@ -119,7 +121,7 @@ void pixel::colorPixel(Camera *camera, int start, int end, int width, int height
                         colors.emplace_back(camera->rayTracer.traceRay(ray));
                         index++;
                     }
-                    if (Color::equal(colors) || AASize==camera->size) {
+                    if (Color::equal(colors) || AASize == camera->size) {
                         color = Color::average(colors);
                         break;
                     }
@@ -175,5 +177,40 @@ Camera Camera::writeToImage() {
 
 Camera Camera::setThreads(int t) {
     this->threads = t;
+    return *this;
+}
+
+Camera Camera::rasterizeImage() {
+// rasterization algorithm
+
+    // iterate over all the triangles
+    // get the closest triangles to the camera
+    // color the pixel in that color
+
+    // take camera vector, and add zero in the quaternion's dimension
+    // and we have (x,y,z,w)
+    // x' = (1-2(y*y+z*z), 2(x*y+w*z)  , 2(x*z-w*y)  ) = (m1,m2,m3)
+    // y' = (2(x*y-w*z)  , 1-2(x*x+z*z), 2(x*w+z*y)  ) = (m4,m5,m6)
+    // z' = (2(w*y+x*z)  , 2(y*z-w*x)  , 1-2(x*x+y*y)) = (m7,m8,m9)
+
+    // angleZ = arctan(m2/m1) = arctan(2(x*y+w*z)/1-2(y*y+z*z))
+    // angleY = arcsin(-m3) = arcsin(-2(x*z-w*y))
+    // angleX = arctan(m6/m9) = arctan(2(x*w+z*y)/1-2(x*x+y*y))
+
+
+    // optimization: get the bounding box and
+    for (auto t: this->rasterizer.getScene().geometries.geometries) {
+        // STEP 1: project vertices of the triangle using perspective projection
+        auto triangle = rasterizer.getPerspectiveProjectedTriangles();
+        Vec2f v0 = perspectiveProject(triangle.v0);
+        Vec2f v1 = perspectiveProject(triangle.v1);
+        Vec2f v2 = perspectiveProject(triangle.v2);
+        for (each pixel in image) {
+            // STEP 2: is this pixel contained in the projected image of the triangle?
+            if (pixelContainedIn2DTriangle(v0, v1, v2, x, y)) {
+                image(x, y) = triangle[i].color;
+            }
+        }
+    }
     return *this;
 }

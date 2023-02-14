@@ -70,7 +70,7 @@ public:
                 .setVPSize(200, 200).setVPDistance(1000)
                 .setRayTracer(RayTracer(scene))
                 .setImageWriter(ImageWriter("shadowTrianglesSphere", 500, 500))
-                .renderImage()
+                .raytraceImage()
                 .writeToImage();
     }
 
@@ -105,8 +105,8 @@ public:
         ImageWriter imageWriter = ImageWriter("lightSphereDirectionalAA", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene1)) //
-                //.setAntiAliasing(8)
-                .renderImage() //
+                        //.setAntiAliasing(8)
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -125,7 +125,7 @@ public:
         ImageWriter imageWriter = ImageWriter("lightSpherePoint", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene1)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -146,7 +146,7 @@ public:
         ImageWriter imageWriter = ImageWriter("lightSphereSpot", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene1)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -165,7 +165,7 @@ public:
         ImageWriter imageWriter = ImageWriter("lightTrianglesDirectional", 500, 500);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene2)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -185,7 +185,7 @@ public:
         ImageWriter imageWriter = ImageWriter("lightTrianglesPoint", 1, 1);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene2)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -205,7 +205,7 @@ public:
         ImageWriter imageWriter = ImageWriter("lightTrianglesSpot", 500, 500);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene2)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -224,7 +224,7 @@ public:
         ImageWriter imageWriter = ImageWriter("lightSphereSpotSharp", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene1)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -244,7 +244,7 @@ public:
         ImageWriter imageWriter = ImageWriter("lightTrianglesSpotSharp", 500, 500);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene2)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -271,7 +271,7 @@ public:
         ImageWriter imageWriter = ImageWriter("multipleLightSphere", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene1)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 
@@ -298,7 +298,7 @@ public:
         ImageWriter imageWriter = ImageWriter("multipleLightTriangles", 500, 500);
         camera2.setImageWriter(imageWriter) //
                 .setRayTracer(RayTracer(scene2)) //
-                .renderImage() //
+                .raytraceImage() //
                 .writeToImage(); //
     }
 };
